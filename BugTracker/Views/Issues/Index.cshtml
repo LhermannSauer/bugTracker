@@ -1,0 +1,78 @@
+﻿@model IEnumerable<BugTracker.Models.Issue>
+
+@{
+    ViewData["Title"] = "Issues";
+}
+
+<h1>Active Issues</h1>
+
+<p>
+    <a asp-action="Create" class="btn-primary btn p-2">Create New</a>
+</p>
+<table class="table table-bordered table-primary table-striped ">
+    <thead class="">
+        <tr>
+            <th class="thead ">
+                @Html.DisplayNameFor(i => i.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(i => i.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(i => i.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(i => i.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(i => i.CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(i => i.UpdatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(i => i.ResolvedDate)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var issue in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-action="Details" asp-route-id="@issue.Id">
+
+                        BT-@Html.DisplayFor(modelItem => issue.Id)
+                    </a>
+                </td>
+
+                <td>
+                    <a asp-action="Details" asp-route-id="@issue.Id">
+                        @Html.DisplayFor(modelItem => issue.Title)
+                    </a>
+                </td>
+
+
+                <td>
+                    @Html.DisplayFor(modelItem => issue.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => issue.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => issue.CreatedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => issue.UpdatedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => issue.ResolvedDate)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@issue.Id">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@issue.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
