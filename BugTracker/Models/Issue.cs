@@ -1,4 +1,5 @@
 ﻿
+
 namespace BugTracker.Models
 {
     public class Issue
@@ -23,10 +24,13 @@ namespace BugTracker.Models
 
         public Developer? AssignedTo { get; set; }
 
+        [Display(Name = "Date Created"), DataType(DataType.Date)]
         public DateTime? CreatedDate { get; set; }
 
+        [Display(Name = "Date Updated"), DataType(DataType.Date)]
         public DateTime? UpdatedDate { get; set; }
 
+        [Display(Name = "Date Resolved"), DataType(DataType.Date)]
         public DateTime? ResolvedDate { get; set; }
 
         // To implement: NotifyUsers

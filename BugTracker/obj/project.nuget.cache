@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "g6wmfaNh7akVv3Dyg2+4cCOzgeNhTo+RCau79qe6J+UYbrO3QeXx3e1p4pWujAuH6SjRWYhG4zGewomIKtXBqw==",
+  "dgSpecHash": "6XALQV7I11DWLAvj/QH66ZKb9MDeput0Ci5HfzSpBknHdXN0vqH1gZbF8yGbkYwZRA2onOQfjgiMoNur1nUrIg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Leandro\\source\\repos\\Projects\\Bug Tracker\\BugTracker\\BugTracker\\BugTracker.csproj",
+  "projectFilePath": "C:\\Users\\Leandro\\source\\repos\\Projects\\Bug Tracker\\bugtracker\\bugtracker\\BugTracker.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Leandro\\.nuget\\packages\\bootstrap\\5.1.3\\bootstrap.5.1.3.nupkg.sha512",
     "C:\\Users\\Leandro\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",

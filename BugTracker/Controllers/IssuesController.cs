@@ -10,13 +10,22 @@
         }
 
         // GET: Issues
-        public async Task<IActionResult> Index(bool includeResolved = true)
+        public async Task<IActionResult> Index(bool includeResolved = true, bool includeClosed = true)
         {
 
-            var issues = await _context.Issues.Include(i => i.Status).ToListAsync();
+            var issues = await _context.Issues
+                            .Include(i => i.Status)
+                            .Include(i => i.Priority)
+                            .Include(i => i.Project)
+                            .ToListAsync();
 
             if (!includeResolved)
             {
+                issues = issues.Where(i => i.Status.Id != Status.Resolved).ToList();
+            }
+            if (!includeClosed)
+            {
+                issues = issues.Where(i => i.Status.Id != Status.Closed).ToList();
             }
 
             return View(issues);

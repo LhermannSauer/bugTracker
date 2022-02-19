@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using BugTracker.Data.ModelConfigurations;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace BugTracker.Data
 {
@@ -18,7 +18,15 @@ namespace BugTracker.Data
         public DbSet<Status>? Statuses { get; set; }
         public DbSet<Project>? Projects { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
 
+            base.OnModelCreating(builder);
+
+            new IssuesConfiguration().Configure(builder.Entity<Issue>());
+
+
+        }
 
     }
 }

@@ -4,75 +4,116 @@
     ViewData["Title"] = "Issues";
 }
 
-<h1>Active Issues</h1>
+<h1>Issues</h1>
 
 <p>
-    <a asp-action="Create" class="btn-primary btn p-2">Create New</a>
+    <a asp-action="Create" class="btn-primary btn p-2">New Issue</a>
 </p>
-<table class="table table-bordered table-primary table-striped ">
+<div class="container d-flex flex-row mt-2 mb-2">
+    <div class="w-25">
+        <label for="filterInput" class="form-label">Filter results</label>
+        <input id="filterInput" type="text" value="" class="form-control" />
+    </div>
+
+
+
+
+</div>
+<table id="issuesTable" class="table table-sm table-responsive table-light table-bordered table-hover table-stripped align-middle mt-3 ">
     <thead class="">
-        <tr>
-            <th class="thead ">
+        <tr class="">
+            <th style="width: 8.88%">
                 @Html.DisplayNameFor(i => i.Id)
             </th>
-            <th>
+            <th style="width: 15.88%">
                 @Html.DisplayNameFor(i => i.Title)
             </th>
-            <th>
+            <th style="width: 8.88%">
                 @Html.DisplayNameFor(i => i.Status)
             </th>
-            <th>
-                @Html.DisplayNameFor(i => i.Description)
+            <th style="width: 8.88%">
+                @Html.DisplayNameFor(i => i.Priority)
             </th>
-            <th>
+            <th style="width: 8.88%">
+                @Html.DisplayNameFor(i => i.Project)
+            </th>
+            <th style="width: 8.88%">
                 @Html.DisplayNameFor(i => i.CreatedDate)
             </th>
-            <th>
+            <th style="width: 8.88%">
                 @Html.DisplayNameFor(i => i.UpdatedDate)
             </th>
-            <th>
+            <th style="width: 8.88%">
                 @Html.DisplayNameFor(i => i.ResolvedDate)
+            </th>
+            <th class="text-center" style="width: 8.88%">
+                Actions
             </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var issue in Model)
         {
-            <tr>
-                <td>
+            <tr class="">
+                <td class="">
                     <a asp-action="Details" asp-route-id="@issue.Id">
 
                         BT-@Html.DisplayFor(modelItem => issue.Id)
                     </a>
                 </td>
 
-                <td>
+                <td class="">
                     <a asp-action="Details" asp-route-id="@issue.Id">
                         @Html.DisplayFor(modelItem => issue.Title)
                     </a>
                 </td>
-
-
-                <td>
-                    @Html.DisplayFor(modelItem => issue.Status)
+                <td class="">
+                    @Html.DisplayFor(modelItem => issue.Status.Name)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => issue.Description)
+                <td class="">
+                    @Html.DisplayFor(modelItem => issue.Priority.Name)
                 </td>
-                <td>
+                <td class="">
+                    @Html.DisplayFor(modelItem => issue.Project.Name)
+                </td>
+                <td class="">
                     @Html.DisplayFor(modelItem => issue.CreatedDate)
                 </td>
-                <td>
+                <td class="">
                     @Html.DisplayFor(modelItem => issue.UpdatedDate)
                 </td>
-                <td>
+                <td class="">
                     @Html.DisplayFor(modelItem => issue.ResolvedDate)
                 </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@issue.Id">Edit</a> |
-                    <a asp-action="Delete" asp-route-id="@issue.Id">Delete</a>
+                <td class="">
+                    <div class="d-flex justify-content-between gap-2">
+                        <a asp-action="Edit" asp-route-id="@issue.Id" class=" btn w-50 btn-sm btn-secondary">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@issue.Id" class="btn w-50 btn-sm btn-danger">Delete</a>
+                    </div>
+                    <div class="d-flex justify-content-center mt-2">
+                        <a asp-action="" asp-route-id="@issue.Id" class="flex-grow-1 btn btn-sm btn-danger">Prioritize</a>
+                    </div>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+
+@section scripts{
+
+<script>
+    $(document).ready(function(){
+        $("#filterInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#issuesTable tr").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+     });
+
+
+
+</script>
+}
