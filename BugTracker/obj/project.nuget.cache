@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "+Tqv2dTNC/uuDZV0Cl8MBpyoBaf1jVYL7gXxd7RqvjaQG5zLNLaXeDaceJhtSz1AlKwNxWh0p4YmJeYhA4/6xA==",
+  "dgSpecHash": "kydbn/NngXVqntVHbU60651E78PVB1VrIJ0+nw4hqjB+DjMOf7SEWyH8tw8KBzj6hqLxqAX9qBcBa+m0MPO6Pw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Leandro\\source\\repos\\Projects\\Bug Tracker\\BugTracker\\bugtracker\\BugTracker.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Leandro\\.nuget\\packages\\bootstrap\\5.1.3\\bootstrap.5.1.3.nupkg.sha512",
     "C:\\Users\\Leandro\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
+    "C:\\Users\\Leandro\\.nuget\\packages\\jquery\\3.6.0\\jquery.3.6.0.nupkg.sha512",
+    "C:\\Users\\Leandro\\.nuget\\packages\\jquery.validation\\1.19.3\\jquery.validation.1.19.3.nupkg.sha512",
     "C:\\Users\\Leandro\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",
     "C:\\Users\\Leandro\\.nuget\\packages\\messagepack.annotations\\2.1.152\\messagepack.annotations.2.1.152.nupkg.sha512",
     "C:\\Users\\Leandro\\.nuget\\packages\\messagepackanalyzer\\2.1.152\\messagepackanalyzer.2.1.152.nupkg.sha512",

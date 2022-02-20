@@ -45,7 +45,7 @@ namespace BugTracker.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Activities", (string)null);
+                    b.ToTable("Activities");
                 });
 
             modelBuilder.Entity("BugTracker.Models.Area", b =>
@@ -60,7 +60,7 @@ namespace BugTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Areas", (string)null);
+                    b.ToTable("Areas");
                 });
 
             modelBuilder.Entity("BugTracker.Models.Developer", b =>
@@ -76,7 +76,7 @@ namespace BugTracker.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Developers", (string)null);
+                    b.ToTable("Developers");
                 });
 
             modelBuilder.Entity("BugTracker.Models.Issue", b =>
@@ -139,7 +139,7 @@ namespace BugTracker.Migrations
 
                     b.HasIndex("StatusId");
 
-                    b.ToTable("Issues", (string)null);
+                    b.ToTable("Issues");
                 });
 
             modelBuilder.Entity("BugTracker.Models.Priority", b =>
@@ -159,7 +159,7 @@ namespace BugTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Priorities", (string)null);
+                    b.ToTable("Priorities");
                 });
 
             modelBuilder.Entity("BugTracker.Models.Project", b =>
@@ -179,7 +179,7 @@ namespace BugTracker.Migrations
 
                     b.HasIndex("ManagerId");
 
-                    b.ToTable("Projects", (string)null);
+                    b.ToTable("Projects");
                 });
 
             modelBuilder.Entity("BugTracker.Models.Status", b =>
@@ -194,7 +194,7 @@ namespace BugTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Statuses", (string)null);
+                    b.ToTable("Statuses");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -400,7 +400,7 @@ namespace BugTracker.Migrations
                         .HasForeignKey("DeveloperId");
 
                     b.HasOne("BugTracker.Models.Issue", null)
-                        .WithMany("Activivies")
+                        .WithMany("Activities")
                         .HasForeignKey("IssueId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -535,7 +535,7 @@ namespace BugTracker.Migrations
 
             modelBuilder.Entity("BugTracker.Models.Issue", b =>
                 {
-                    b.Navigation("Activivies");
+                    b.Navigation("Activities");
                 });
 #pragma warning restore 612, 618
         }

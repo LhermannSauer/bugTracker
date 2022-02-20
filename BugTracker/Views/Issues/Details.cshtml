@@ -135,8 +135,18 @@
                 </ul>
                 <div class="text-center m-t-md">
                     <a href="#" class="btn btn-xs btn-primary">Add files</a>
-                    <a href="#" class="btn btn-xs btn-primary">Reassign</a>
-                    <a href="#" class="btn btn-xs btn-danger">Close</a>
+                    @{
+                        if (User.IsInRole("Developer"))
+                        {
+                            <a href="#" class="btn btn-xs btn-primary">Reassign</a>
+
+                        }
+                        if (User.IsInRole("Administrator"))
+                        {
+                            <a href="#" class="btn btn-xs btn-danger">Close</a>
+                        }
+
+                    }
 
 
                 </div>
