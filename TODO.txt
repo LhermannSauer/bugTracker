@@ -14,3 +14,9 @@ REMOVE ISSUES
 
 issues Details:
 	Participants: Get a list of developers that added activieties/assigned to + creator
+	Implement add comment with an option to resolve it or reassign
+	implement add files button
+	implement reassign button
+	implement close button.
+	remove tags
+

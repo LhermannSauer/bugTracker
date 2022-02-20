@@ -62,3 +62,7 @@ tr {
 a {
     color: var(--color-accent)
 }
+
+input, textarea {
+    resize: none;
+}

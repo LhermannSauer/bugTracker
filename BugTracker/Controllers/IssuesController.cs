@@ -51,8 +51,7 @@ namespace BugTracker.Controllers
             return View(issue);
         }
 
-        // GET: Issues/Create
-        public IActionResult Create()
+        public IActionResult IssueForm()
         {
             var areas = _context.Areas.ToList();
             var priorities = _context.Priorities.ToList();
@@ -67,36 +66,72 @@ namespace BugTracker.Controllers
             return View(model);
         }
 
-        // POST: Issues/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(IssuesFormViewModel issueForm)
+        public async Task<IActionResult> Save(IssuesFormViewModel issueForm)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var userName = HttpContext.User.Identity.Name;
-            var user = _context.Users.Single(u => u.UserName == userName);
-
-            var issue = new Issue()
+            // If id is 0, then it is a new issue
+            if (issueForm.Id == 0)
             {
-                Title = issueForm.Title,
-                Description = issueForm.Description,
-                PriorityId = issueForm.PriorityId,
-                AreaId = issueForm.AreaId,
-                ProjectId = issueForm.ProjectId,
-                StatusId = Status.Open,
-                CreatedDate = DateTime.Now,
-                CreatorId = user.Id,
-            };
+                // get data of the user that submitted the form.
+                var userName = HttpContext.User.Identity.Name;
+                var user = _context.Users.Single(u => u.UserName == userName);
 
-            await _context.Issues.AddAsync(issue);
+                // Create the new object
+                var issue = new Issue()
+                {
+                    Title = issueForm.Title,
+                    Description = issueForm.Description,
+                    PriorityId = issueForm.PriorityId,
+                    AreaId = issueForm.AreaId,
+                    ProjectId = issueForm.ProjectId,
+                    StatusId = Status.Open,
+                    CreatedDate = DateTime.Now,
+                    CreatorId = user.Id,
+                };
+
+                // add it to the db
+                await _context.Issues.AddAsync(issue);
+            }
+            else // The id already exists in db
+            {
+                //Get the db object
+                var issueInDb = await _context.Issues.FindAsync(issueForm.Id);
+
+                //update fields
+                issueInDb.Title = issueForm.Title;
+                issueInDb.Description = issueForm.Description;
+                issueInDb.PriorityId = issueForm.PriorityId;
+                issueInDb.AreaId = issueForm.AreaId;
+                issueInDb.ProjectId = issueForm.ProjectId;
+                // Set updated date to now
+                issueInDb.UpdatedDate = DateTime.Now;
+                ;
+
+            }
             await _context.SaveChangesAsync();
 
 
             return RedirectToAction("Index", "Issues");
+        }
+
+        public ActionResult Create()
+        {
+            var areas = _context.Areas.ToList();
+            var priorities = _context.Priorities.ToList();
+            var projects = _context.Projects.ToList();
+            var newIssue = new IssuesFormViewModel
+            {
+                Id = 0,
+                Areas = new SelectList(areas, "Id", "Name"),
+                Priorities = new SelectList(priorities, "Id", "Name"),
+                Projects = new SelectList(projects, "Id", "Name"),
+            };
+
+            return View("IssueForm", newIssue);
         }
 
         // GET: Issues/Edit/5
@@ -107,17 +142,33 @@ namespace BugTracker.Controllers
                 return NotFound();
             }
 
-            var issue = await _context.Issues.FindAsync(id);
+            var issue = await _context.Issues.SingleOrDefaultAsync(i => i.Id == id);
+            var areas = _context.Areas.ToList();
+            var priorities = _context.Priorities.ToList();
+            var projects = _context.Projects.ToList();
+
+            var viewModel = new IssuesFormViewModel
+            {
+                Id = issue.Id,
+                Title = issue.Title,
+                Description = issue.Description,
+                PriorityId = issue.PriorityId,
+                AreaId = issue.AreaId,
+                ProjectId = issue.ProjectId,
+                Areas = new SelectList(areas, "Id", "Name"),
+                Priorities = new SelectList(priorities, "Id", "Name"),
+                Projects = new SelectList(projects, "Id", "Name"),
+            };
+
+
             if (issue == null)
             {
                 return NotFound();
             }
-            return View(issue);
+
+            return View("IssueForm", viewModel);
         }
 
-        // POST: Issues/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,CreatedDate,UpdatedDate,ResolvedDate")] Issue issue)
@@ -150,7 +201,6 @@ namespace BugTracker.Controllers
             return View(issue);
         }
 
-        // GET: Issues/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -168,7 +218,6 @@ namespace BugTracker.Controllers
             return View(issue);
         }
 
-        // POST: Issues/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
