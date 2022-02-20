@@ -1783,6 +1783,15 @@
           }
         }
       },
+      "Mvc.JQuery.DataTables/1.5.56": {
+        "type": "package",
+        "compile": {
+          "lib/net451/Mvc.JQuery.DataTables.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Mvc.JQuery.DataTables.dll": {}
+        }
+      },
       "MySqlConnector/2.1.2": {
         "type": "package",
         "compile": {
@@ -6096,6 +6105,18 @@
         "version.txt"
       ]
     },
+    "Mvc.JQuery.DataTables/1.5.56": {
+      "sha512": "7eyazBavqaR26MJE/huX9rRy1JuQ+JoOz/tvk+q2qMvjvwT4OWJMUUnnH+j7QH0isg24oPSP6q4mcAmggnTxbQ==",
+      "type": "package",
+      "path": "mvc.jquery.datatables/1.5.56",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net451/Mvc.JQuery.DataTables.dll",
+        "mvc.jquery.datatables.1.5.56.nupkg.sha512",
+        "mvc.jquery.datatables.nuspec"
+      ]
+    },
     "MySqlConnector/2.1.2": {
       "sha512": "JVokQTUNN3WHAu9Vw8ieeq1dXTFokJiig5P0VJ4f439UxRrsPo6SaVWC8Zdm6mkPeQFhZ0/9afdWa02EY/1j/w==",
       "type": "package",
@@ -10335,6 +10356,7 @@
       "Microsoft.EntityFrameworkCore.SqlServer >= 6.0.2",
       "Microsoft.EntityFrameworkCore.Tools >= 6.0.2",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 6.0.2",
+      "Mvc.JQuery.Datatables >= 1.5.56",
       "Pomelo.EntityFrameworkCore.MySql >= 6.0.1",
       "Pomelo.EntityFrameworkCore.MySql.Design >= 1.1.2",
       "bootstrap >= 5.1.3"
@@ -10347,11 +10369,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Leandro\\source\\repos\\Projects\\Bug Tracker\\BugTracker\\BugTracker\\BugTracker.csproj",
+      "projectUniqueName": "C:\\Users\\Leandro\\source\\repos\\Projects\\Bug Tracker\\BugTracker\\bugtracker\\BugTracker.csproj",
       "projectName": "BugTracker",
-      "projectPath": "C:\\Users\\Leandro\\source\\repos\\Projects\\Bug Tracker\\BugTracker\\BugTracker\\BugTracker.csproj",
+      "projectPath": "C:\\Users\\Leandro\\source\\repos\\Projects\\Bug Tracker\\BugTracker\\bugtracker\\BugTracker.csproj",
       "packagesPath": "C:\\Users\\Leandro\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Leandro\\source\\repos\\Projects\\Bug Tracker\\BugTracker\\BugTracker\\obj\\",
+      "outputPath": "C:\\Users\\Leandro\\source\\repos\\Projects\\Bug Tracker\\BugTracker\\bugtracker\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -10410,6 +10432,10 @@
             "target": "Package",
             "version": "[6.0.2, )"
           },
+          "Mvc.JQuery.Datatables": {
+            "target": "Package",
+            "version": "[1.5.56, )"
+          },
           "Pomelo.EntityFrameworkCore.MySql": {
             "target": "Package",
             "version": "[6.0.1, )"
@@ -10444,5 +10470,17 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Mvc.JQuery.DataTables 1.5.56' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net6.0'. This package may not be fully compatible with your project.",
+      "libraryId": "Mvc.JQuery.DataTables",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    }
+  ]
 }

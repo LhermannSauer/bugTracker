@@ -24,13 +24,13 @@ namespace BugTracker.Models
 
         public Developer? AssignedTo { get; set; }
 
-        [Display(Name = "Date Created"), DataType(DataType.Date)]
+        [Display(Name = "Created"), DataType(DataType.Date)]
         public DateTime? CreatedDate { get; set; }
 
-        [Display(Name = "Date Updated"), DataType(DataType.Date)]
+        [Display(Name = "Updated"), DataType(DataType.Date)]
         public DateTime? UpdatedDate { get; set; }
 
-        [Display(Name = "Date Resolved"), DataType(DataType.Date)]
+        [Display(Name = "Resolved"), DataType(DataType.Date)]
         public DateTime? ResolvedDate { get; set; }
 
         // To implement: NotifyUsers

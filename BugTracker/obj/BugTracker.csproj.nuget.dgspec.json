@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Leandro\\source\\repos\\Projects\\Bug Tracker\\bugtracker\\bugtracker\\BugTracker.csproj": {}
+    "C:\\Users\\Leandro\\source\\repos\\Projects\\Bug Tracker\\BugTracker\\bugtracker\\BugTracker.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Leandro\\source\\repos\\Projects\\Bug Tracker\\bugtracker\\bugtracker\\BugTracker.csproj": {
+    "C:\\Users\\Leandro\\source\\repos\\Projects\\Bug Tracker\\BugTracker\\bugtracker\\BugTracker.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Leandro\\source\\repos\\Projects\\Bug Tracker\\bugtracker\\bugtracker\\BugTracker.csproj",
+        "projectUniqueName": "C:\\Users\\Leandro\\source\\repos\\Projects\\Bug Tracker\\BugTracker\\bugtracker\\BugTracker.csproj",
         "projectName": "BugTracker",
-        "projectPath": "C:\\Users\\Leandro\\source\\repos\\Projects\\Bug Tracker\\bugtracker\\bugtracker\\BugTracker.csproj",
+        "projectPath": "C:\\Users\\Leandro\\source\\repos\\Projects\\Bug Tracker\\BugTracker\\bugtracker\\BugTracker.csproj",
         "packagesPath": "C:\\Users\\Leandro\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Leandro\\source\\repos\\Projects\\Bug Tracker\\bugtracker\\bugtracker\\obj\\",
+        "outputPath": "C:\\Users\\Leandro\\source\\repos\\Projects\\Bug Tracker\\BugTracker\\bugtracker\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -69,6 +69,10 @@
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[6.0.2, )"
+            },
+            "Mvc.JQuery.Datatables": {
+              "target": "Package",
+              "version": "[1.5.56, )"
             },
             "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",

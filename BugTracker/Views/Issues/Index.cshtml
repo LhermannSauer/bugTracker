@@ -19,7 +19,7 @@
 
 
 </div>
-<table id="issuesTable" class="table table-sm table-responsive table-light table-bordered table-hover table-stripped align-middle mt-3 ">
+<table id="issuesTable" class="table table-sm  table-responsive  table-hover align-middle mt-3 ">
     <thead class="">
         <tr class="">
             <th style="width: 8.88%">
@@ -46,7 +46,7 @@
             <th style="width: 8.88%">
                 @Html.DisplayNameFor(i => i.ResolvedDate)
             </th>
-            <th class="text-center" style="width: 8.88%">
+            <th class="text-center" data-class-name="Actions" style="width: 8.88%">
                 Actions
             </th>
         </tr>
@@ -101,19 +101,21 @@
 
 
 @section scripts{
-
 <script>
-    $(document).ready(function(){
-        $("#filterInput").on("keyup", function() {
-            var value = $(this).val().toLowerCase();
-            $("#issuesTable tr").filter(function() {
-              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
 
-     });
+            $(document).ready(function(){
+
+                $("#issuesTable").DataTable({
+                    searching: false,
+
+                    columnDefs:[
+                        { orderable:false, targets: 8}
+                    ]
+                })
 
 
 
+
+    });
 </script>
 }

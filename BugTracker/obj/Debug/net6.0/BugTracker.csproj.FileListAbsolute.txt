@@ -274,3 +274,5 @@ C:\Users\Leandro\source\repos\Projects\Bug Tracker\BugTracker\BugTracker\bin\Deb
 C:\Users\Leandro\source\repos\Projects\Bug Tracker\BugTracker\BugTracker\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
 C:\Users\Leandro\source\repos\Projects\Bug Tracker\BugTracker\BugTracker\bin\Debug\net6.0\runtimes\win-arm\lib\net6.0\dotnet-aspnet-codegenerator-design.exe
 C:\Users\Leandro\source\repos\Projects\Bug Tracker\BugTracker\BugTracker\bin\Debug\net6.0\runtimes\win-arm64\lib\net6.0\dotnet-aspnet-codegenerator-design.exe
+C:\Users\Leandro\source\repos\Projects\Bug Tracker\bugtracker\bugtracker\bin\Debug\net6.0\libman.json
+C:\Users\Leandro\source\repos\Projects\Bug Tracker\BugTracker\BugTracker\bin\Debug\net6.0\Mvc.JQuery.DataTables.dll
