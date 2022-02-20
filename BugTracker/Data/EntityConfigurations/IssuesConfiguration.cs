@@ -14,15 +14,11 @@ namespace BugTracker.Data.ModelConfigurations
 
             builder.Property(i => i.Description).IsRequired().HasMaxLength(1000);
 
-            builder.Property(i => i.CreatedDate).HasColumnType("Date");
+            builder.Property(i => i.ProjectId).IsRequired();
 
-            builder.Property(i => i.UpdatedDate).HasColumnType("Date");
+            builder.Property(i => i.AreaId).IsRequired();
 
-            builder.Property(i => i.UpdatedDate).HasColumnType("Date");
-
-
-
-
+            builder.Property(i => i.PriorityId).IsRequired();
 
             // relationships
         }

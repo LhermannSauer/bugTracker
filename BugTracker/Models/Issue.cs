@@ -12,25 +12,35 @@ namespace BugTracker.Models
 
         public Status? Status { get; set; }
 
+        public int? StatusId { get; set; }
+
         public Area? Area { get; set; }
+
+        public int? AreaId { get; set; }
 
         public Priority? Priority { get; set; }
 
+        public int? PriorityId { get; set; }
+
         public Project? Project { get; set; }
+
+        public int? ProjectId { get; set; }
 
         public IEnumerable<Activity>? Activivies { get; set; }
 
         public IdentityUser? Creator { get; set; }
 
+        public string? CreatorId { get; set; }
+
         public Developer? AssignedTo { get; set; }
 
-        [Display(Name = "Created"), DataType(DataType.Date)]
+        [Display(Name = "Created")]
         public DateTime? CreatedDate { get; set; }
 
-        [Display(Name = "Updated"), DataType(DataType.Date)]
+        [Display(Name = "Updated")]
         public DateTime? UpdatedDate { get; set; }
 
-        [Display(Name = "Resolved"), DataType(DataType.Date)]
+        [Display(Name = "Resolved")]
         public DateTime? ResolvedDate { get; set; }
 
         // To implement: NotifyUsers

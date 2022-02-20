@@ -3,6 +3,7 @@ using System;
 using BugTracker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BugTracker.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220220143328_AddedForeignIdsToissuesTable")]
+    partial class AddedForeignIdsToissuesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,7 +47,7 @@ namespace BugTracker.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Activities", (string)null);
+                    b.ToTable("Activities");
                 });
 
             modelBuilder.Entity("BugTracker.Models.Area", b =>
@@ -60,7 +62,7 @@ namespace BugTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Areas", (string)null);
+                    b.ToTable("Areas");
                 });
 
             modelBuilder.Entity("BugTracker.Models.Developer", b =>
@@ -76,7 +78,7 @@ namespace BugTracker.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Developers", (string)null);
+                    b.ToTable("Developers");
                 });
 
             modelBuilder.Entity("BugTracker.Models.Issue", b =>
@@ -139,7 +141,7 @@ namespace BugTracker.Migrations
 
                     b.HasIndex("StatusId");
 
-                    b.ToTable("Issues", (string)null);
+                    b.ToTable("Issues");
                 });
 
             modelBuilder.Entity("BugTracker.Models.Priority", b =>
@@ -159,7 +161,7 @@ namespace BugTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Priorities", (string)null);
+                    b.ToTable("Priorities");
                 });
 
             modelBuilder.Entity("BugTracker.Models.Project", b =>
@@ -179,7 +181,7 @@ namespace BugTracker.Migrations
 
                     b.HasIndex("ManagerId");
 
-                    b.ToTable("Projects", (string)null);
+                    b.ToTable("Projects");
                 });
 
             modelBuilder.Entity("BugTracker.Models.Status", b =>
@@ -194,7 +196,7 @@ namespace BugTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Statuses", (string)null);
+                    b.ToTable("Statuses");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

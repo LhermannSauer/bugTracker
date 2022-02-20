@@ -3,6 +3,7 @@ using System;
 using BugTracker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BugTracker.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220220132846_addedForeignKeysIdsToIssuesTable")]
+    partial class addedForeignKeysIdsToIssuesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,7 +47,7 @@ namespace BugTracker.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Activities", (string)null);
+                    b.ToTable("Activities");
                 });
 
             modelBuilder.Entity("BugTracker.Models.Area", b =>
@@ -60,7 +62,7 @@ namespace BugTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Areas", (string)null);
+                    b.ToTable("Areas");
                 });
 
             modelBuilder.Entity("BugTracker.Models.Developer", b =>
@@ -76,7 +78,7 @@ namespace BugTracker.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Developers", (string)null);
+                    b.ToTable("Developers");
                 });
 
             modelBuilder.Entity("BugTracker.Models.Issue", b =>
@@ -86,14 +88,13 @@ namespace BugTracker.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("AreaId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("AssignedToId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("Date");
 
                     b.Property<string>("CreatorId")
                         .HasColumnType("varchar(255)");
@@ -104,11 +105,9 @@ namespace BugTracker.Migrations
                         .HasColumnType("varchar(1000)");
 
                     b.Property<int?>("PriorityId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("ProjectId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("ResolvedDate")
@@ -123,7 +122,7 @@ namespace BugTracker.Migrations
                         .HasColumnType("varchar(50)");
 
                     b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("Date");
 
                     b.HasKey("Id");
 
@@ -139,7 +138,7 @@ namespace BugTracker.Migrations
 
                     b.HasIndex("StatusId");
 
-                    b.ToTable("Issues", (string)null);
+                    b.ToTable("Issues");
                 });
 
             modelBuilder.Entity("BugTracker.Models.Priority", b =>
@@ -159,7 +158,7 @@ namespace BugTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Priorities", (string)null);
+                    b.ToTable("Priorities");
                 });
 
             modelBuilder.Entity("BugTracker.Models.Project", b =>
@@ -179,7 +178,7 @@ namespace BugTracker.Migrations
 
                     b.HasIndex("ManagerId");
 
-                    b.ToTable("Projects", (string)null);
+                    b.ToTable("Projects");
                 });
 
             modelBuilder.Entity("BugTracker.Models.Status", b =>
@@ -194,7 +193,7 @@ namespace BugTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Statuses", (string)null);
+                    b.ToTable("Statuses");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -425,9 +424,7 @@ namespace BugTracker.Migrations
                 {
                     b.HasOne("BugTracker.Models.Area", "Area")
                         .WithMany()
-                        .HasForeignKey("AreaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AreaId");
 
                     b.HasOne("BugTracker.Models.Developer", "AssignedTo")
                         .WithMany("Assignments")
@@ -439,15 +436,11 @@ namespace BugTracker.Migrations
 
                     b.HasOne("BugTracker.Models.Priority", "Priority")
                         .WithMany()
-                        .HasForeignKey("PriorityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PriorityId");
 
                     b.HasOne("BugTracker.Models.Project", "Project")
                         .WithMany()
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProjectId");
 
                     b.HasOne("BugTracker.Models.Status", "Status")
                         .WithMany()

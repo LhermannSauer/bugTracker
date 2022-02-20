@@ -1,0 +1,12 @@
+
+2/19
+Implemented new issues creation. 
+Should use Ids for foreign keys to avoid 4 queries per creation.
+Add the user ID to the issue. 
+Make it a protected link for auth 
+
+UPDATE ISSUES
+Change status, update date, assign, reassing.
+
+
+REMOVE ISSUES

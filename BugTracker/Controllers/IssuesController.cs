@@ -2,6 +2,7 @@
 
 namespace BugTracker.Controllers
 {
+    [Authorize]
     public class IssuesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -68,24 +69,26 @@ namespace BugTracker.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
-
+            var userName = HttpContext.User.Identity.Name;
+            var user = _context.Users.Single(u => u.UserName == userName);
 
             var issue = new Issue()
             {
                 Title = issueForm.Title,
                 Description = issueForm.Description,
-                Priority = _context.Priorities.Single(p => p.Id == issueForm.PriorityId),
-                Area = _context.Areas.Single(a => a.Id == issueForm.AreaId),
-                Project = _context.Projects.Single(p => p.Id == issueForm.ProjectId),
-                Status = _context.Statuses.Single(p => p.Id == Status.Open),
-                CreatedDate = DateTime.Now.Date
+                PriorityId = issueForm.PriorityId,
+                AreaId = issueForm.AreaId,
+                ProjectId = issueForm.ProjectId,
+                StatusId = Status.Open,
+                CreatedDate = DateTime.Now,
+                CreatorId = user.Id,
             };
 
             await _context.Issues.AddAsync(issue);
             await _context.SaveChangesAsync();
 
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Issues");
         }
 
         // GET: Issues/Edit/5
