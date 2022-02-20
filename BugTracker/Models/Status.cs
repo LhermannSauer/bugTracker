@@ -9,5 +9,7 @@
         //for access in Issues Controller (index)
         public static byte Resolved = 4;
         public static byte Closed = 5;
+        public static byte Open = 1;
+
     }
 }

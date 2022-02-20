@@ -1,4 +1,6 @@
-﻿namespace BugTracker.Controllers
+﻿using BugTracker.Models.viewModels;
+
+namespace BugTracker.Controllers
 {
     public class IssuesController : Controller
     {
@@ -10,7 +12,7 @@
         }
 
         // GET: Issues
-        public async Task<IActionResult> Index(bool includeResolved = true, bool includeClosed = true)
+        public async Task<IActionResult> Index()
         {
 
             var issues = await _context.Issues
@@ -18,15 +20,6 @@
                             .Include(i => i.Priority)
                             .Include(i => i.Project)
                             .ToListAsync();
-
-            if (!includeResolved)
-            {
-                issues = issues.Where(i => i.Status.Id != Status.Resolved).ToList();
-            }
-            if (!includeClosed)
-            {
-                issues = issues.Where(i => i.Status.Id != Status.Closed).ToList();
-            }
 
             return View(issues);
         }
@@ -52,7 +45,17 @@
         // GET: Issues/Create
         public IActionResult Create()
         {
-            return View();
+            var areas = _context.Areas.ToList();
+            var priorities = _context.Priorities.ToList();
+            var projects = _context.Projects.ToList();
+
+            var model = new IssuesFormViewModel();
+
+            model.Areas = new SelectList(areas, "Id", "Name");
+            model.Priorities = new SelectList(priorities, "Id", "Name");
+            model.Projects = new SelectList(projects, "Id", "Name"); ;
+
+            return View(model);
         }
 
         // POST: Issues/Create
@@ -60,15 +63,29 @@
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,CreatedDate,UpdatedDate,ResolvedDate")] Issue issue)
+        public async Task<IActionResult> Create(IssuesFormViewModel issueForm)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+
+
+            var issue = new Issue()
             {
-                _context.Add(issue);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(issue);
+                Title = issueForm.Title,
+                Description = issueForm.Description,
+                Priority = _context.Priorities.Single(p => p.Id == issueForm.PriorityId),
+                Area = _context.Areas.Single(a => a.Id == issueForm.AreaId),
+                Project = _context.Projects.Single(p => p.Id == issueForm.ProjectId),
+                Status = _context.Statuses.Single(p => p.Id == Status.Open),
+                CreatedDate = DateTime.Now.Date
+            };
+
+            await _context.Issues.AddAsync(issue);
+            await _context.SaveChangesAsync();
+
+
+            return RedirectToAction("Index");
         }
 
         // GET: Issues/Edit/5

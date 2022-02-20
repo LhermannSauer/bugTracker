@@ -1,42 +1,51 @@
-﻿@model BugTracker.Models.Issue
+﻿@model BugTracker.Models.viewModels.IssuesFormViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Report an Issue";
 }
 
-<h1>Create</h1>
+<h1>Report an issue</h1>
 
-<h4>Issue</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            <div class="form-group mb-1">
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-1">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <textarea asp-for="Description" class="form-control "> </textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="CreatedDate" class="control-label"></label>
-                <input asp-for="CreatedDate" class="form-control" />
-                <span asp-validation-for="CreatedDate" class="text-danger"></span>
+            <div class="input-group mb-1">
+                <div class="input-group-prepend w-25">
+
+                    @Html.LabelFor(i => i.ProjectId,"Priority",new {@class="input-group-text "})
+                </div>
+                @Html.DropDownListFor(i => i.ProjectId, Model.Projects,"Project", new {@class="custom-select form-select"})
+
             </div>
-            <div class="form-group">
-                <label asp-for="UpdatedDate" class="control-label"></label>
-                <input asp-for="UpdatedDate" class="form-control" />
-                <span asp-validation-for="UpdatedDate" class="text-danger"></span>
+            <div class="input-group mb-1">
+                <div class="input-group-prepend w-25">
+
+                    @Html.LabelFor(i => i.PriorityId,"Priority",new {@class="input-group-text "})
+                </div>
+                @Html.DropDownListFor(i => i.PriorityId, Model.Priorities,"Priority", new {@class="custom-select form-select"})
+
             </div>
-            <div class="form-group">
-                <label asp-for="ResolvedDate" class="control-label"></label>
-                <input asp-for="ResolvedDate" class="form-control" />
-                <span asp-validation-for="ResolvedDate" class="text-danger"></span>
+            <div class="input-group mb-1">
+                <div class="input-group-prepend w-25">
+
+                    @Html.LabelFor(i => i.AreaId,"Area",new {@class="input-group-text "})
+                </div>
+                @Html.DropDownListFor(i => i.AreaId, Model.Areas, "Area", new {@class="custom-select form-select"})
+
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -49,5 +58,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
 }

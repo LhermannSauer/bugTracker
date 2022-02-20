@@ -3,11 +3,12 @@
     --color-accent-light: #D9A7A5;
     --color-accent: #8F4E4A;
     --color-primary: #A5D9B9;
-    --color-secondary: #E9CDBF
+    --color-secondary: #E9CDBF;
 }
 
 html {
     font-size: 14px;
+    background-color: var(--main-bg-color)
 }
 
 @media (min-width: 768px) {
@@ -33,6 +34,7 @@ body {
 .navbar {
     padding-top: 0;
     padding-bottom: 0;
+    background-color: var(--main-bg-color)
 }
 
 #issuesTable {
@@ -55,4 +57,8 @@ tr {
 
 #issuesTable tr:nth-child(2n) {
     background-color: #C9D9D4
+}
+
+a {
+    color: var(--color-accent)
 }
