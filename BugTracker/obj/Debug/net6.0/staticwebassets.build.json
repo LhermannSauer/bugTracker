@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Z3bPA/DXh9zQVV2bzb/IN9Z4ErzgokI9sLLTUdLeVA0=",
+  "Hash": "yaDBlm0xejbt0E1rQ2KG25t/cft3ZdllXriv5yJbQqY=",
   "Source": "BugTracker",
   "BasePath": "_content/BugTracker",
   "Mode": "Default",
@@ -1817,6 +1817,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\Leandro\\source\\repos\\Projects\\Bug Tracker\\BugTracker\\bugtracker\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\BugTracker.bundle.scp.css"
+    },
+    {
+      "Identity": "C:\\Users\\Leandro\\source\\repos\\Projects\\Bug Tracker\\BugTracker\\bugtracker\\wwwroot\\css\\issue_details.css",
+      "SourceId": "BugTracker",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Leandro\\source\\repos\\Projects\\Bug Tracker\\BugTracker\\bugtracker\\wwwroot\\",
+      "BasePath": "_content/BugTracker",
+      "RelativePath": "css/issue_details.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\issue_details.css"
     },
     {
       "Identity": "C:\\Users\\Leandro\\source\\repos\\Projects\\Bug Tracker\\BugTracker\\bugtracker\\wwwroot\\css\\site.css",
@@ -4350,6 +4367,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\static\\bugtracker.png"
+    },
+    {
+      "Identity": "C:\\Users\\Leandro\\source\\repos\\Projects\\Bug Tracker\\BugTracker\\bugtracker\\wwwroot\\static\\pdf.png",
+      "SourceId": "BugTracker",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Leandro\\source\\repos\\Projects\\Bug Tracker\\BugTracker\\bugtracker\\wwwroot\\",
+      "BasePath": "_content/BugTracker",
+      "RelativePath": "static/pdf.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\static\\pdf.png"
     }
   ]
 }

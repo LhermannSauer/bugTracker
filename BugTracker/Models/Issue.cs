@@ -26,7 +26,7 @@ namespace BugTracker.Models
 
         public int? ProjectId { get; set; }
 
-        public IEnumerable<Activity>? Activivies { get; set; }
+        public IEnumerable<Activity>? Activities { get; set; }
 
         public IdentityUser? Creator { get; set; }
 

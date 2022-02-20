@@ -34,11 +34,19 @@ namespace BugTracker.Controllers
             }
 
             var issue = await _context.Issues
+                .Include(i => i.Project)
+                .Include(i => i.Creator)
+                .Include(i => i.Area)
+                .Include(i => i.Priority)
+                .Include(i => i.Status)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (issue == null)
             {
                 return NotFound();
             }
+
+            issue.Activities = _context.Activities.Where(a => a.IssueId == issue.Id);
 
             return View(issue);
         }

@@ -10,3 +10,7 @@ Change status, update date, assign, reassing.
 
 
 REMOVE ISSUES
+
+
+issues Details:
+	Participants: Get a list of developers that added activieties/assigned to + creator
