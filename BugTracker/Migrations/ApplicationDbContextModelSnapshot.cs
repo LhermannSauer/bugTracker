@@ -31,8 +31,17 @@ namespace BugTracker.Migrations
                     b.Property<int?>("DeveloperId")
                         .HasColumnType("int");
 
-                    b.Property<int>("IssueId")
+                    b.Property<int?>("IssueId")
                         .HasColumnType("int");
+
+                    b.Property<bool?>("ReassignedIssue")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("ReassignedToId")
+                        .HasColumnType("longtext");
+
+                    b.Property<bool?>("UpdatedStatus")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("varchar(255)");
@@ -401,9 +410,7 @@ namespace BugTracker.Migrations
 
                     b.HasOne("BugTracker.Models.Issue", null)
                         .WithMany("Activities")
-                        .HasForeignKey("IssueId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IssueId");
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BugTracker.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220220190003_SeedRoles")]
-    partial class SeedRoles
+    [Migration("20220221003937_AddedReassignedToIdToActivitiesTable")]
+    partial class AddedReassignedToIdToActivitiesTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,8 +33,17 @@ namespace BugTracker.Migrations
                     b.Property<int?>("DeveloperId")
                         .HasColumnType("int");
 
-                    b.Property<int>("IssueId")
+                    b.Property<int?>("IssueId")
                         .HasColumnType("int");
+
+                    b.Property<bool?>("ReassignedIssue")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("ReassignedToId")
+                        .HasColumnType("longtext");
+
+                    b.Property<bool?>("UpdatedStatus")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("varchar(255)");
@@ -403,9 +412,7 @@ namespace BugTracker.Migrations
 
                     b.HasOne("BugTracker.Models.Issue", null)
                         .WithMany("Activities")
-                        .HasForeignKey("IssueId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IssueId");
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
