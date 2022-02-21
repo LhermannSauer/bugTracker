@@ -46,7 +46,7 @@ namespace BugTracker.Controllers
                 return NotFound();
             }
 
-            issue.Activities = _context.Activities.Where(a => a.IssueId == issue.Id);
+            issue.Activities = _context.Activities.Where(a => a.IssueId == issue.Id).ToList();
 
             return View(issue);
         }

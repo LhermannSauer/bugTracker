@@ -1,5 +1,4 @@
 @model BugTracker.Models.viewModels.AcitivityFormViewModel
-
 @{
     ViewData["Title"] = "Edit";
 }
@@ -80,18 +79,18 @@
             <hr />
             <div id="activityform" class="container ">
                 <h3>Add new Activity</h3>
-                <form class="">
+                @using (Html.BeginForm("Save", "Activities"))
+                {
                     <div class="form-group mt-2">
                         @Html.LabelFor(m => m.Description)
                         @Html.TextAreaFor(m => m.Description, new {@class = "form-control"})
                     </div>
-
                     <div class="form-group form-check mt-2">
                         @Html.LabelFor(m=> m.UpdatedStatus, "Update Status")
                         @Html.CheckBoxFor(m => m.UpdatedStatus, new {@class = "form-check-input update-status"})
                     </div>
-                    <div class="form-group mt-2">
-                        @Html.DropDownListFor(m =>m.Issue.StatusId, Model.Statuses, null, new { @class="form-select update-status-list", display="none"})
+                    <div class="form-group mt-2" id="StatusId">
+                        @Html.DropDownListFor(m =>m.StatusId, Model.Statuses, null, new { @class="form-select update-status-list", display="none"})
                     </div>
                     <div class="form-group form-check mt-2">
                         @Html.LabelFor(m=> m.ReassignedIssue, "Reassign Issue")
@@ -99,7 +98,7 @@
                     </div>
 
                     <div class="form-group mt-2" id="reassign-to">
-                        <select class="form-select " aria-label="Default select" disabled>
+                        <select class="form-select" aria-label="Default select" data-val="true" id="ReassignToId" name="reassignToId" disabled>
                             <option value="0" selected>Reassign Issue</option>
                             @{
                                 foreach (var dev in Model.ReassignToList)
@@ -109,7 +108,12 @@
                             }
                         </select>
                     </div>
-                </form>
+
+                    @Html.HiddenFor(a => a.IssueId)
+                    @Html.HiddenFor(a => a.Id)
+                    @Html.HiddenFor(a => a.UserId)
+                    <button class="btn btn-primary d-block w-50 m-auto mt-2" type="submit">Add Post</button>
+                }
             </div>
         </div>
 

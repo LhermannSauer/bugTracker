@@ -4,7 +4,7 @@ namespace BugTracker.Models.viewModels
     {
         public SelectList? Priorities { get; set; }
 
-        public IEnumerable<Developer> ReassignToList { get; set; }
+        public IEnumerable<Developer>? ReassignToList { get; set; }
 
         public SelectList? Statuses { get; set; }
 
@@ -12,7 +12,6 @@ namespace BugTracker.Models.viewModels
 
         public bool IsDeveloper;
 
-        [Required]
         public int? Id { get; set; }
 
         [Required, MaxLength(1000)]
@@ -21,16 +20,17 @@ namespace BugTracker.Models.viewModels
         [Required]
         public int? IssueId { get; set; }
 
-        [Required, MaxLength(255)]
         public string? UserId { get; set; }
 
         [Required]
         public bool UpdatedStatus { get; set; }
 
+        public int StatusId { get; set; }
+
         [Required]
         public bool ReassignedIssue { get; set; }
 
-        [Required, MaxLength(255)]
-        public string? ReassignToId { get; set; }
+        [Required]
+        public int? ReassignToId { get; set; }
     }
 }

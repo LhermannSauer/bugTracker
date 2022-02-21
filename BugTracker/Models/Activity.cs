@@ -10,10 +10,12 @@
 
         public IdentityUser? User { get; set; }
 
+        public string? UserId { get; set; }
+
         public bool? UpdatedStatus { get; set; }
 
         public bool? ReassignedIssue { get; set; }
 
-        public string? ReassignedToId { get; set; }
+        public int? ReassignedToId { get; set; }
     }
 }

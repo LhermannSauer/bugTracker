@@ -6,6 +6,8 @@
 
         public IdentityUser? User { get; set; }
 
+        public string UserId { get; set; }
+
         public IEnumerable<Issue>? Assignments { get; set; }
 
         public IEnumerable<Activity>? ActivityRecord { get; set; }

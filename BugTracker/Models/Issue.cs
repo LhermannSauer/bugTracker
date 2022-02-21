@@ -34,6 +34,8 @@ namespace BugTracker.Models
 
         public Developer? AssignedTo { get; set; }
 
+        public int? AssignedToId { get; set; }
+
         [Display(Name = "Created")]
         public DateTime? CreatedDate { get; set; }
 

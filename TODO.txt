@@ -20,3 +20,6 @@ issues Details:
 	implement close button.
 	remove tags
 
+
+Activities
+	Make the form return the needed parameters. Test.
