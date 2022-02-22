@@ -276,3 +276,4 @@ C:\Users\Leandro\source\repos\Projects\Bug Tracker\BugTracker\BugTracker\bin\Deb
 C:\Users\Leandro\source\repos\Projects\Bug Tracker\BugTracker\BugTracker\bin\Debug\net6.0\runtimes\win-arm64\lib\net6.0\dotnet-aspnet-codegenerator-design.exe
 C:\Users\Leandro\source\repos\Projects\Bug Tracker\bugtracker\bugtracker\bin\Debug\net6.0\libman.json
 C:\Users\Leandro\source\repos\Projects\Bug Tracker\BugTracker\BugTracker\bin\Debug\net6.0\Mvc.JQuery.DataTables.dll
+C:\Users\Leandro\source\repos\Projects\Bug Tracker\BugTracker\bugtracker\bin\Debug\net6.0\BlazorToastify.dll

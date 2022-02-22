@@ -5,92 +5,85 @@
 }
 
 <link rel="stylesheet" href="~/css/IssuesIndex.css" />
+<link rel="stylesheet" href="~/lib/toastify-js/toastify.min.css" />
+
 <h1>Issues</h1>
 
 <a asp-action="Create" class="btn-primary btn p-2">New Issue</a>
 
-<table id="issuesTable" class="table table-sm  table-responsive  table-hover align-middle mt-3 ">
-    <thead class="">
-        <tr class="">
-            <th style="width: 8.88%">
-                @Html.DisplayNameFor(i => i.Id)
-            </th>
-            <th style="width: 15.88%">
-                @Html.DisplayNameFor(i => i.Title)
-            </th>
-            <th style="width: 8.88%">
-                @Html.DisplayNameFor(i => i.Status)
-            </th>
-            <th style="width: 8.88%">
-                @Html.DisplayNameFor(i => i.Priority)
-            </th>
-            <th style="width: 8.88%">
-                @Html.DisplayNameFor(i => i.Project)
-            </th>
-            <th style="width: 8.88%">
-                @Html.DisplayNameFor(i => i.CreatedDate)
-            </th>
-            <th style="width: 8.88%">
-                @Html.DisplayNameFor(i => i.UpdatedDate)
-            </th>
-            <th style="width: 8.88%">
-                @Html.DisplayNameFor(i => i.ResolvedDate)
-            </th>
-            <th class="text-center" data-class-name="Actions" style="width: 8.88%">
-                Actions
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var issue in Model)
-        {
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" id="modal-btn" data-toggle="modal" data-target="#exampleModal">
+    Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+
+    <div class="">
+        <input id="hide-closed" name="hide-closed" type="checkbox" class="form-checkbox " />
+        <label for="hide-closed">Hide closed</label>
+        <input id="hide-resolved" name="hide-resolved" type="checkbox" value="" class='form-checkbox' />
+        <label for="hide-resolved">Hide resolved</label>
+    </div>
+
+    <table id="issuesTable" class="table table-sm  table-responsive  table-hover align-middle ">
+        <thead class="">
             <tr class="">
-                <td class="">
-                    <a asp-action="Details" asp-route-id="@issue.Id">
-
-                        BT-@Html.DisplayFor(modelItem => issue.Id)
-                    </a>
-                </td>
-
-                <td class="">
-                    <a asp-action="Details" asp-route-id="@issue.Id">
-                        @Html.DisplayFor(modelItem => issue.Title)
-                    </a>
-                </td>
-                <td class="">
-                    @Html.DisplayFor(modelItem => issue.Status.Name)
-                </td>
-                <td class="">
-                    @Html.DisplayFor(modelItem => issue.Priority.Name)
-                </td>
-                <td class="">
-                    @Html.DisplayFor(modelItem => issue.Project.Name)
-                </td>
-                <td class="">
-                    @issue.CreatedDate.Value.ToString("MM/dd/yyyy HH:mm")
-                </td>
-                <td class="">
-                    @Html.DisplayFor(modelItem => issue.UpdatedDate)
-                </td>
-                <td class="">
-                    @Html.DisplayFor(modelItem => issue.ResolvedDate)
-                </td>
-                <td class="">
-                    <div class="d-flex justify-content-between gap-2">
-                        <a asp-action="Edit" asp-route-id="@issue.Id" class=" btn w-50 btn-sm btn-secondary">Edit</a>
-                        <a asp-action="Delete" asp-route-id="@issue.Id" class="btn w-50 btn-sm btn-danger">Delete</a>
-                    </div>
-                    <div class="d-flex justify-content-center mt-2  ">
-                        <button type="button" class="btn btn-danger btn-rounded mb-4 ">
-                            Prioritize
-                        </button>
-
-                    </div>
-                </td>
+                <th style="width: 8.88%">
+                    @Html.DisplayNameFor(i => i.Id)
+                </th>
+                <th style="width: 15.88%">
+                    @Html.DisplayNameFor(i => i.Title)
+                </th>
+                <th style="width: 8.88%">
+                    @Html.DisplayNameFor(i => i.Status)
+                </th>
+                <th style="width: 8.88%">
+                    @Html.DisplayNameFor(i => i.Priority)
+                </th>
+                <th style="width: 8.88%">
+                    @Html.DisplayNameFor(i => i.Project)
+                </th>
+                <th style="width: 8.88%">
+                    @Html.DisplayNameFor(i => i.CreatedDate)
+                </th>
+                <th style="width: 8.88%">
+                    @Html.DisplayNameFor(i => i.UpdatedDate)
+                </th>
+                <th style="width: 8.88%">
+                    @Html.DisplayNameFor(i => i.ResolvedDate)
+                </th>
+                <th class="text-center" data-class-name="Actions" style="width: 8.88%">
+                    Actions
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+          
+        </tbody>
+    </table>
+
+</div>
 
 <div id="prioritiesModal" class="d-flex justify-items-center px-5 align-items-center d-none">
     <section id="first" class="section">
@@ -104,21 +97,110 @@
 
 
 @section scripts{
+<script src="~/lib/toastify-js/toastify.min.js"> </script>
 <script>
 
     $(document).ready(function(){
 
+        Toastify({
+            text:"Welcome!",
+            duration:3000
+        }).showToast();
+
+        //console.log($.ajax({url: '/api/issues'}));
+
         $("#issuesTable").DataTable({
-            columnDefs:[
+            ajax: {
+                url: "/api/issues",
+                dataSrc: ""     // object that contains the data, empty if not nested
+            },
+            columns:[
                 {
-                    orderable:false, targets: 8}
+                    data:"id",
+                    render: function(data, type, issue) {
+                        return "<a href='/issues/details/" + issue.id + "' >BT-" + data + "</a>";
+                    }
+                },
+                {
+                    data:"title",
+                    render: function(data, type, issue) {
+                        return "<a href='/issues/details/" + issue.id + "' >BT-" + data + "</a>";
+                    }
+                },
+                {
+                    data:"status.name",
+                },
+                {
+                    data:"priority.name",
+                },
+                {
+                    data:"project.name",
+                },
+                {
+                    data:"createdDate"
+
+                },
+                {
+                    data:"updatedDate",
+                },
+                {
+                    data:"resolvedDate",
+                },
+                {
+                    data:"id",
+                    render: function(data, type, issue) {
+                        return (
+                            `<div class="d-flex justify-content-between gap-2">
+                                    <a href="issues/edit/`+issue.id+`" class=" btn w-50 btn-sm btn-secondary">Edit</a>
+                                    <button data-issue-id="`+issue.id+`" class="btn btn-danger js-close">Close</button>
+                                </div>
+                            <div class="d-flex justify-content-center mt-2  ">
+                                <button type="button" class="btn btn-danger btn-rounded mb-4 ">
+                                    Prioritize
+                                </button>
+                            </div>`
+                        )
+                    }
+                }
             ]
         });
-        $("#filterInput").on("keyup", function() {
-          var value = $(this).val().toLowerCase();
-          $("tbody tr").filter(function() {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-          });
+
+
+
+
+
+
+
+
+        $("#hide-resolved").on("click", () =>{
+            $("tbody tr").filter(function () {
+
+            })
+        })
+
+
+        $("#modal-btn").on("click", () => {
+            $("#exampleModal").modal("show")
+        })
+
+        $('#myModal').on('shown.bs.modal', function () {
+            console.log("ASD")
+            $('#myInput').trigger('focus')
+        })
+
+
+
+
+        $("#issuesTable .js-close").on("click", function() {
+            if (confirm("Are you sure you want to close this issue?")){
+                $.ajax({
+                    url :"api/issues/close/" +$(this).attr("data-issue-id"),
+                    mehotd: "POST",
+                    success: () => {
+                        console.log("succes");
+                    }
+                })
+            }
         });
 
 

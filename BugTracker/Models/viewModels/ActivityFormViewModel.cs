@@ -1,6 +1,6 @@
 namespace BugTracker.Models.viewModels
 {
-    public class AcitivityFormViewModel
+    public class ActivityFormViewModel
     {
         public SelectList? Priorities { get; set; }
 

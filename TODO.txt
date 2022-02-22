@@ -21,5 +21,5 @@ issues Details:
 	remove tags
 
 
-Activities
-	Make the form return the needed parameters. Test.
+
+Implement hide closed and resolved. Ajax?

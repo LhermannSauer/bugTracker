@@ -15,7 +15,7 @@ namespace BugTracker.Controllers
         // Based on the issueId you will get the form to add an activity
         // only creator and developers can post, other should request access
         [HttpGet]
-        public async Task<IActionResult> Edit(int issueId)
+        public async Task<IActionResult> Edit(int issueId, bool partialView = false)
         {
             var isCreator = false;
             var isDeveloper = false;
@@ -54,7 +54,7 @@ namespace BugTracker.Controllers
             var statuses = await _context.Statuses.ToListAsync();
 
 
-            var viewModel = new AcitivityFormViewModel
+            var viewModel = new ActivityFormViewModel
             {
                 Priorities = new SelectList(priorities, "Id", "Name"),
                 Statuses = new SelectList(statuses, "Id", "Name"),
@@ -64,13 +64,11 @@ namespace BugTracker.Controllers
                 Issue = issue,
             };
 
-            Console.WriteLine(viewModel.ReassignToList);
-
             return View("ActivityForm", viewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Save(AcitivityFormViewModel activity)
+        public async Task<IActionResult> Save(ActivityFormViewModel activity)
         {
             if (!ModelState.IsValid)
             {

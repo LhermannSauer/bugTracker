@@ -212,7 +212,7 @@ namespace BugTracker.Controllers
         }
 
         [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Close(int? id)
         {
             if (id == null)
             {
@@ -226,18 +226,12 @@ namespace BugTracker.Controllers
                 return NotFound();
             }
 
-            return View(issue);
+            issue.StatusId = Status.Closed;
+
+            return RedirectToAction("Index");
         }
 
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var issue = await _context.Issues.FindAsync(id);
-            _context.Issues.Remove(issue);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+
 
         private bool IssueExists(int id)
         {
