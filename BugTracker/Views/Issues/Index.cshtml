@@ -79,7 +79,6 @@
             </tr>
         </thead>
         <tbody>
-          
         </tbody>
     </table>
 
@@ -104,7 +103,11 @@
 
         Toastify({
             text:"Welcome!",
-            duration:3000
+            duration:3000,
+            style: {
+                background: "linear-gradient(to right, #00B09B, #96C96D)"
+            }
+
         }).showToast();
 
         //console.log($.ajax({url: '/api/issues'}));
@@ -166,12 +169,9 @@
         });
 
 
+    // FILTERS
 
-
-
-
-
-
+        //RESOLVE
         $("#hide-resolved").on("click", () =>{
             $("tbody tr").filter(function () {
 
@@ -179,6 +179,10 @@
         })
 
 
+
+
+
+    // MODALS
         $("#modal-btn").on("click", () => {
             $("#exampleModal").modal("show")
         })
@@ -190,14 +194,38 @@
 
 
 
+    // CLOSE ISSUE
+        $("#issuesTable").on("click", ".js-close", function() {
 
-        $("#issuesTable .js-close").on("click", function() {
-            if (confirm("Are you sure you want to close this issue?")){
+            let status = $(this).parent().parent().siblings().first().next().next();
+            console.log(status)
+            if (status.text() == "Closed"){
+                Toastify({
+                    text: "This issue is already closed!",
+                    duration:3000,
+                    offset:{
+                        x: 150,
+                        y: 150
+                    },
+                    style: {
+                        background: "linear-gradient(to right, #EE4242, #990201)",
+                        fontSize: "20px",
+                        position: "center",
+                    }
+                }).showToast();
+            }
+
+            else if (confirm("Are you sure you want to close this issue?")){
+
+                status.text("Closed");
                 $.ajax({
-                    url :"api/issues/close/" +$(this).attr("data-issue-id"),
-                    mehotd: "POST",
+                    url :"api/issues/" +$(this).attr("data-issue-id"),
+                    method: "DELETE",
                     success: () => {
                         console.log("succes");
+                    },
+                    error: () => {
+
                     }
                 })
             }

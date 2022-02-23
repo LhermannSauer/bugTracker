@@ -84,6 +84,7 @@
                     <div class="form-group mt-2">
                         @Html.LabelFor(m => m.Description)
                         @Html.TextAreaFor(m => m.Description, new {@class = "form-control"})
+                        @Html.ValidationMessageFor(m => m.Description)
                     </div>
                     <div class="form-group form-check mt-2">
                         @Html.LabelFor(m=> m.UpdatedStatus, "Update Status")
@@ -110,6 +111,9 @@
                     </div>
 
                     @Html.HiddenFor(a => a.IssueId)
+                    @Html.HiddenFor(a => a.Priorities)
+                    @Html.HiddenFor(a => a.Statuses)
+                    @Html.HiddenFor(a => a.ReassignToList)
                     @Html.HiddenFor(a => a.Id)
                     @Html.HiddenFor(a => a.UserId)
                     <button class="btn btn-primary d-block w-50 m-auto mt-2" type="submit">Add Post</button>

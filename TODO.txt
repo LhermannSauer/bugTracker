@@ -23,3 +23,6 @@ issues Details:
 
 
 Implement hide closed and resolved. Ajax?
+
+BUGS
+	if you post an activity without ticking the checkboxes, returns400. add validation??? 

@@ -29,7 +29,7 @@ namespace BugTracker.Controllers
                             .Include(i => i.Project)
                             .SingleAsync(i => i.Id == issueId);
 
-            issue.Activities = _context.Activities.Where(a => a.IssueId == issue.Id);
+            issue.Activities = _context.Activities.ToList().Where((a => a.IssueId == issue.Id));
 
             //Get the user ID for permits
             var userId = _context.Users.Single(u => u.UserName == HttpContext.User.Identity.Name).Id;
@@ -72,7 +72,32 @@ namespace BugTracker.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                var priorities = await _context.Priorities.ToListAsync();
+                var reassignToList = await _context.Developers.Include(d => d.User).ToListAsync();
+                var statuses = await _context.Statuses.ToListAsync();
+                var issue = await _context.Issues
+                                .Include(i => i.Area)
+                                .Include(i => i.AssignedTo)
+                                .Include(i => i.Creator)
+                                .Include(i => i.Status)
+                                .Include(i => i.Priority)
+                                .Include(i => i.Project)
+                                .SingleAsync(i => i.Id == activity.IssueId);
+                issue.Activities = _context.Activities.ToList().Where((a => a.IssueId == issue.Id));
+
+
+                var viewModel = new ActivityFormViewModel
+                {
+                    Priorities = new SelectList(priorities, "Id", "Name"),
+                    Statuses = new SelectList(statuses, "Id", "Name"),
+                    ReassignToList = reassignToList,
+                    ReassignToId = activity.ReassignToId,
+                    IsDeveloper = activity.IsDeveloper,
+                    IssueId = activity.IssueId,
+                    Issue = issue
+                };
+                return View("ActivityForm", viewModel);
+
             }
             // Get the user object that submitted the form
             var user = await _context.Users.SingleAsync(u => u.UserName == HttpContext.User.Identity.Name);
@@ -109,6 +134,9 @@ namespace BugTracker.Controllers
                 issueInDb.AssignedToId = activity.ReassignToId;
                 newActivity.ReassignedToId = activity.ReassignToId;
             }
+
+            // in any case, save the date the issue was updated
+            issueInDb.UpdatedDate = DateTime.Now;
 
             await _context.Activities.AddAsync(newActivity);
             await _context.SaveChangesAsync();

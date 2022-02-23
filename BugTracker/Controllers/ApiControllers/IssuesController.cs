@@ -26,7 +26,8 @@
 
         }
 
-        [HttpPost("/Close/{id:int}")]
+        [HttpDelete("{id:int}")]
+        [AllowAnonymous]
         public async Task<IActionResult> CloseIssue(int id)
         {
             var issue = await _context.Issues.SingleOrDefaultAsync(i => i.Id == id);
@@ -39,7 +40,7 @@
             issue.StatusId = Status.Closed;
             await _context.SaveChangesAsync();
 
-            return Ok(issue);
+            return RedirectToAction("Index", "Issues");
         }
 
 

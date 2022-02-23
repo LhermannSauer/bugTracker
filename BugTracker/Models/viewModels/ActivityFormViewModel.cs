@@ -30,7 +30,6 @@ namespace BugTracker.Models.viewModels
         [Required]
         public bool ReassignedIssue { get; set; }
 
-        [Required]
         public int? ReassignToId { get; set; }
     }
 }
