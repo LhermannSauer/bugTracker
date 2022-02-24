@@ -87,7 +87,7 @@
                                     <div class="tab-content">
                                         <div class="tab-pane active" id="tab-1">
                                             <div class="feed-activity-list">
-                                                @foreach (var activity in Model.Activities)
+                                                @foreach (var activity in Model.Activities.Reverse())
                                                 {
                                                     @Html.Partial("_ActivityEntry", activity)
 

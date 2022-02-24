@@ -19,10 +19,14 @@
 
         public int? StatusId { get; set; }
 
+        public Status Status { get; set; }
+
         public bool? ResolvedIssue { get; set; }
 
         public bool? ReassignedIssue { get; set; }
 
         public int? ReassignedToId { get; set; }
+
+        public Developer? ReassignedTo { get; set; }
     }
 }

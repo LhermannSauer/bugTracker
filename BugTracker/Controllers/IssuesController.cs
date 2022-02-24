@@ -52,7 +52,7 @@ namespace BugTracker.Controllers
                 return NotFound();
             }
 
-            issue.Activities = _context.Activities.Include(a => a.User).Where(a => a.IssueId == issue.Id).ToList();
+            issue.Activities = _context.Activities.Include(a => a.User).Include(a => a.Status).Include(a => a.ReassignedTo.User).Where(a => a.IssueId == issue.Id).ToList();
 
             return View(issue);
         }

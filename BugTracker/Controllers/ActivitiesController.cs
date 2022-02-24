@@ -19,7 +19,7 @@ namespace BugTracker.Controllers
         }
 
         // Based on the issueId you will get the form to add an activity
-        // only creator and developers can post, other should request access
+        // only creator, admin, and developers can post, other should request access
         [HttpGet]
         public async Task<IActionResult> Edit(int issueId, bool partialView = false)
         {
@@ -50,7 +50,7 @@ namespace BugTracker.Controllers
             }
 
             // if not a dev or the creator, not authorized to add. Until implement issue sharing
-            if (!isDeveloper && !isCreator)
+            if (!isDeveloper && !isCreator && !(HttpContext.User.IsInRole("CanPostInAllIssues")))
             {
                 return Unauthorized("Please request access to this issue");
             }

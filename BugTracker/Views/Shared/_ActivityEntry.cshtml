@@ -42,23 +42,21 @@
     }
     else if (Model.ReassignedIssue.Value && Model.UpdatedStatus.Value)
     {
-        activityText = " updated the status and reassigned the issue.";
+        activityText = " updated the status to " + Model.Status.Name + " and reassigned the issue to " + Model.ReassignedTo.User + ".";
     }
     else if (Model.ReassignedIssue.Value)
     {
-        activityText = " reassigned the issue.";
+        activityText = " reassigned the issue to " + Model.ReassignedTo.User + ".";
     }
     else if (Model.UpdatedStatus.Value)
     {
-        activityText = " updated the status.";
+        activityText = " updated the status to " + Model.Status.Name + ".";
     }
     else
     {
         activityText = " posted.";
     }
-
 }
-
 
 
 <div class="feed-element">
@@ -66,7 +64,7 @@
         <img alt="image" class="img-circle rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar6.png">
     </a>
     <div class="media-body ">
-        <small class="pull-right">@timeAgo</small>
+        <small class="pull-right">@timeAgo</small><br />
         <strong>@Model.User.UserName</strong>@activityText<br>
         <small class="text-muted">@Model.DateCreated.Value.ToString("dd/MMM/yy - HH:mm:ss")</small>
         <div class="well">
