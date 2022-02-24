@@ -125,7 +125,9 @@ namespace BugTracker.Controllers
                 IssueId = activity.IssueId,
                 UserId = activity.UserId,
                 UpdatedStatus = activity.UpdatedStatus,
+                StatusId = activity.StatusId,
                 ReassignedIssue = activity.ReassignedIssue,
+                ResolvedIssue = activity.StatusId == Status.Resolved,
             };
 
 

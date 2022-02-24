@@ -10,6 +10,5 @@
 
         public IEnumerable<Issue>? Assignments { get; set; }
 
-        public IEnumerable<Activity>? ActivityRecord { get; set; }
     }
 }

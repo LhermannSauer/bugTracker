@@ -87,20 +87,11 @@
                                     <div class="tab-content">
                                         <div class="tab-pane active" id="tab-1">
                                             <div class="feed-activity-list">
-                                                <div class="feed-element">
-                                                    <a href="#" class="pull-left">
-                                                        <img alt="image" class="img-circle" src="https://bootdey.com/img/Content/avatar/avatar6.png">
-                                                    </a>
-                                                    <div class="media-body ">
-                                                        <small class="pull-right">2h ago</small>
-                                                        <strong>Mark Johnson</strong> posted message on <strong>Monica Smith</strong> site. <br>
-                                                        <small class="text-muted">Today 2:10 pm - 12.06.2014</small>
-                                                        <div class="well">
-                                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
-                                                            Over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                @foreach (var activity in Model.Activities)
+                                                {
+                                                    @Html.Partial("_ActivityEntry", activity)
+
+                                                }
                                             </div>
                                         </div>
                                     </div>

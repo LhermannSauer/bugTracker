@@ -3,6 +3,7 @@ using System;
 using BugTracker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BugTracker.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220224012424_AddedDateCreatedColumnToACtivitiesTable")]
+    partial class AddedDateCreatedColumnToACtivitiesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,6 +33,9 @@ namespace BugTracker.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("longtext");
 
+                    b.Property<int?>("DeveloperId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("IssueId")
                         .HasColumnType("int");
 
@@ -40,12 +45,6 @@ namespace BugTracker.Migrations
                     b.Property<int?>("ReassignedToId")
                         .HasColumnType("int");
 
-                    b.Property<bool?>("ResolvedIssue")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<int?>("StatusId")
-                        .HasColumnType("int");
-
                     b.Property<bool?>("UpdatedStatus")
                         .HasColumnType("tinyint(1)");
 
@@ -53,6 +52,8 @@ namespace BugTracker.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DeveloperId");
 
                     b.HasIndex("IssueId");
 
@@ -409,6 +410,10 @@ namespace BugTracker.Migrations
 
             modelBuilder.Entity("BugTracker.Models.Activity", b =>
                 {
+                    b.HasOne("BugTracker.Models.Developer", null)
+                        .WithMany("ActivityRecord")
+                        .HasForeignKey("DeveloperId");
+
                     b.HasOne("BugTracker.Models.Issue", null)
                         .WithMany("Activities")
                         .HasForeignKey("IssueId");
@@ -538,6 +543,8 @@ namespace BugTracker.Migrations
 
             modelBuilder.Entity("BugTracker.Models.Developer", b =>
                 {
+                    b.Navigation("ActivityRecord");
+
                     b.Navigation("Assignments");
                 });
 
