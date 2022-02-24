@@ -12,6 +12,12 @@ namespace BugTracker.Controllers
             _context = context;
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+            base.Dispose(disposing);
+        }
+
         // GET: Issues
         public async Task<IActionResult> Index()
         {
@@ -99,7 +105,7 @@ namespace BugTracker.Controllers
             else // The id already exists in db
             {
                 //Get the db object
-                var issueInDb = await _context.Issues.FindAsync(issueForm.Id);
+                var issueInDb = await _context.Issues.SingleAsync(i => i.Id == issueForm.Id);
 
                 //update fields
                 issueInDb.Title = issueForm.Title;
@@ -118,88 +124,54 @@ namespace BugTracker.Controllers
             return RedirectToAction("Index", "Issues");
         }
 
-        public ActionResult Create()
-        {
-            var areas = _context.Areas.ToList();
-            var priorities = _context.Priorities.ToList();
-            var projects = _context.Projects.ToList();
-            var newIssue = new IssuesFormViewModel
-            {
-                Id = 0,
-                Areas = new SelectList(areas, "Id", "Name"),
-                Priorities = new SelectList(priorities, "Id", "Name"),
-                Projects = new SelectList(projects, "Id", "Name"),
-            };
-
-            return View("IssueForm", newIssue);
-        }
-
-        // GET: Issues/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            IssuesFormViewModel viewModel;
+
+            if (id != null)
             {
-                return NotFound();
+                if (!await _context.Issues.AnyAsync(i => i.Id == id))
+                {
+                    return NotFound();
+                }
             }
 
-            var issue = await _context.Issues.SingleOrDefaultAsync(i => i.Id == id);
             var areas = _context.Areas.ToList();
             var priorities = _context.Priorities.ToList();
             var projects = _context.Projects.ToList();
 
-            var viewModel = new IssuesFormViewModel
+            if (id == null)
             {
-                Id = issue.Id,
-                Title = issue.Title,
-                Description = issue.Description,
-                PriorityId = issue.PriorityId,
-                AreaId = issue.AreaId,
-                ProjectId = issue.ProjectId,
-                Areas = new SelectList(areas, "Id", "Name"),
-                Priorities = new SelectList(priorities, "Id", "Name"),
-                Projects = new SelectList(projects, "Id", "Name"),
-            };
-
-
-            if (issue == null)
+                viewModel = new IssuesFormViewModel
+                {
+                    Id = 0,
+                    Areas = new SelectList(areas, "Id", "Name"),
+                    Priorities = new SelectList(priorities, "Id", "Name"),
+                    Projects = new SelectList(projects, "Id", "Name"),
+                }
+                ;
+            }
+            else
             {
-                return NotFound();
+                var issue = await _context.Issues.SingleAsync(i => i.Id == id);
+
+                viewModel = new IssuesFormViewModel
+                {
+                    Id = issue.Id,
+                    Title = issue.Title,
+                    Description = issue.Description,
+                    PriorityId = issue.PriorityId,
+                    AreaId = issue.AreaId,
+                    ProjectId = issue.ProjectId,
+                    Areas = new SelectList(areas, "Id", "Name"),
+                    Priorities = new SelectList(priorities, "Id", "Name"),
+                    Projects = new SelectList(projects, "Id", "Name"),
+                };
             }
 
             return View("IssueForm", viewModel);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,CreatedDate,UpdatedDate,ResolvedDate")] Issue issue)
-        {
-            if (id != issue.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(issue);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!IssueExists(issue.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(issue);
-        }
 
         public async Task<IActionResult> Prioritize(int? id, int? priorityId)
         {

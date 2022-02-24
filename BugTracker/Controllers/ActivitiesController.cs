@@ -12,6 +12,12 @@ namespace BugTracker.Controllers
             _context = context;
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+            base.Dispose(disposing);
+        }
+
         // Based on the issueId you will get the form to add an activity
         // only creator and developers can post, other should request access
         [HttpGet]

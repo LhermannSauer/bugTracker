@@ -11,21 +11,20 @@
         [Required]
         public int? Id { get; set; }
 
-        [Required, MinLength(5), MaxLength(250)]
+        [Required(ErrorMessage = "Please give a title to the issue."), MinLength(5), MaxLength(250)]
         public string? Title { get; set; }
 
-        [Required, MinLength(3), MaxLength(5000)]
+        [Required(ErrorMessage = "Please provide a description for this issue."), MinLength(3), MaxLength(5000)]
         public string? Description { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please indicate to which area this issue is related.")]
         public int? AreaId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please indicate the priority of this issue.")]
         public int? PriorityId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please indicate which project has this issue.")]
         public int? ProjectId { get; set; }
-
 
 
         public IssuesFormViewModel()
