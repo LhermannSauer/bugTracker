@@ -27,9 +27,9 @@ namespace BugTracker.Models.viewModels
 
         public int StatusId { get; set; }
 
-        [Required]
         public bool ReassignedIssue { get; set; }
 
+        [DevSelectedIfReassignedChecked]
         public int? ReassignToId { get; set; }
     }
 }

@@ -12,8 +12,7 @@
         }
 
         [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> Issues()
+        public async Task<IActionResult> GetIssues()
         {
             var issues = await _context.Issues
                             .Include(i => i.Status)
@@ -26,6 +25,26 @@
 
         }
 
+        [HttpGet("{id:int}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetIssue(int id)
+        {
+            var issue = await _context.Issues
+                            .Include(i => i.Status)
+                            .Include(i => i.Area)
+                            .Include(i => i.Priority)
+                            .Include(i => i.Project)
+                            .SingleOrDefaultAsync(i => i.Id == id);
+
+            if (issue == null)
+            {
+                return NotFound();
+            }
+            return Ok(issue);
+        }
+
+
+        // Issues should never be deletet just resolved or closed
         [HttpDelete("{id:int}")]
         [AllowAnonymous]
         public async Task<IActionResult> CloseIssue(int id)

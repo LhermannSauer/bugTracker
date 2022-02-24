@@ -92,6 +92,7 @@ namespace BugTracker.Controllers
                     Statuses = new SelectList(statuses, "Id", "Name"),
                     ReassignToList = reassignToList,
                     ReassignToId = activity.ReassignToId,
+                    ReassignedIssue = activity.ReassignedIssue,
                     IsDeveloper = activity.IsDeveloper,
                     IssueId = activity.IssueId,
                     Issue = issue

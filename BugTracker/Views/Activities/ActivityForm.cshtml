@@ -108,6 +108,8 @@
                                 }
                             }
                         </select>
+                        @Html.ValidationMessageFor(m => m.ReassignToId)
+
                     </div>
 
                     @Html.HiddenFor(a => a.IssueId)
@@ -175,8 +177,12 @@
 
     $(document).ready(function(){
 
-        let reassignSelect = $("#reassign-to select").first();
+        let reassignSelect = $("#ReassignToId");
         let reassignIssueCheckBox = $(".reassign-issue").first();
+
+        if(reassignIssueCheckBox.is(":checked")){
+                reassignSelect.prop("disabled","")
+        }
 
         reassignIssueCheckBox.on("click", () => {
             if (reassignIssueCheckBox.is(":checked")){
