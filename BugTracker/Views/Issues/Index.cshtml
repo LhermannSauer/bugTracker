@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<BugTracker.Models.Issue>
-
 @{
     ViewData["Title"] = "Issues";
 }
@@ -9,67 +8,30 @@
 
 <h1>Issues</h1>
 
+
+@* TEST *@
+<div class="container w-50 m-auto">@Html.Partial("_PrioritizeOptions")</div>
+
 <a asp-action="Edit" class="btn-primary btn p-2">New Issue</a>
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" id="modal-btn" data-toggle="modal" data-target="#exampleModal">
-    Launch demo modal
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="container mt-5">
-
     <div class="">
-        <input id="hide-closed" name="hide-closed" type="checkbox" class="form-checkbox " />
+        <input id="hide-closed" name="hide-closed" type="checkbox" class="form-checkbox" />
         <label for="hide-closed">Hide closed</label>
-        <input id="hide-resolved" name="hide-resolved" type="checkbox" value="" class='form-checkbox' />
+        <input id="hide-resolved" name="hide-resolved" type="checkbox" value="" class="form-checkbox" />
         <label for="hide-resolved">Hide resolved</label>
     </div>
 
-    <table id="issuesTable" class="table table-sm  table-responsive  table-hover align-middle ">
+    <table id="issuesTable" class="table table-sm table-responsive table-hover align-middle">
         <thead class="">
             <tr class="">
-                <th style="width: 8.88%">
-                    @Html.DisplayNameFor(i => i.Id)
-                </th>
-                <th style="width: 15.88%">
-                    @Html.DisplayNameFor(i => i.Title)
-                </th>
-                <th style="width: 8.88%">
-                    @Html.DisplayNameFor(i => i.Status)
-                </th>
-                <th style="width: 8.88%">
-                    @Html.DisplayNameFor(i => i.Priority)
-                </th>
-                <th style="width: 8.88%">
-                    @Html.DisplayNameFor(i => i.Project)
-                </th>
-                <th style="width: 8.88%">
-                    @Html.DisplayNameFor(i => i.CreatedDate)
-                </th>
-                <th style="width: 8.88%">
-                    @Html.DisplayNameFor(i => i.UpdatedDate)
-                </th>
+                <th style="width: 8.88%">@Html.DisplayNameFor(i => i.Id)</th>
+                <th style="width: 15.88%">@Html.DisplayNameFor(i => i.Title)</th>
+                <th style="width: 8.88%">@Html.DisplayNameFor(i => i.Status)</th>
+                <th style="width: 8.88%">@Html.DisplayNameFor(i => i.Priority)</th>
+                <th style="width: 8.88%">@Html.DisplayNameFor(i => i.Project)</th>
+                <th style="width: 8.88%">@Html.DisplayNameFor(i => i.CreatedDate)</th>
+                <th style="width: 8.88%">@Html.DisplayNameFor(i => i.UpdatedDate)</th>
                 <th style="width: 8.88%">
                     @Html.DisplayNameFor(i => i.ResolvedDate)
                 </th>
@@ -78,161 +40,269 @@
                 </th>
             </tr>
         </thead>
-        <tbody>
-        </tbody>
+        <tbody></tbody>
     </table>
-
 </div>
 
-<div id="prioritiesModal" class="d-flex justify-items-center px-5 align-items-center d-none">
-    <section id="first" class="section">
-        <div class="radio-container"> <input type="radio" name="group1" id="radio-1" value="1"> <label for="radio-1"><span class="radio">Critical</span></label> </div>
-        <div class="radio-container"> <input type="radio" name="group1" id="radio-2" value="2"> <label for="radio-2"><span class="radio">High</span></label> </div>
-        <div class="radio-container"> <input type="radio" name="group1" id="radio-3" value="3"> <label for="radio-3"><span class="radio">Medium High</span></label> </div>
-        <div class="radio-container"> <input type="radio" name="group1" id="radio-4" value="4"> <label for="radio-4"><span class="radio">Medium Low</span></label> </div>
-        <div class="radio-container"> <input type="radio" name="group1" id="radio-5" value="5"> <label for="radio-5"><span class="radio">Low</span></label> </div>
-    </section>
+<div class="modal fade bd-example-modal-sm" id="prioritizeFormModal" tabindex="0" role="radio"
+    aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="false">
+    <div class="modal-dialog">
+        <form method="POST" action="/issues/prioritize" id="" class="form-control">
+            <input type="radio" name="group1" id="radio-1" value="1" />
+            <label for="radio-1">
+                <span class="radio">Critical</span>
+            </label>
+            <input type="radio" name="group1" id="radio-2" value="2" />
+            <label for="radio-2">
+                <span class="radio">High</span>
+            </label>
+            <input type="radio" name="group1" id="radio-3" value="3" />
+            <label for="radio-3">
+                <span class="radio"> Medium High </span>
+            </label>
+            <input type="radio" name="group1" id="radio-4" value="4" />
+            <label for="radio-4">
+                <span class="radio"> Medium Low </span>
+            </label>
+            <input type="radio" name="group1" id="radio-5" value="5" />
+            <label for="radio-5">
+                <span class="radio">Low</span>
+            </label>
+            <button type="submit" class="btn btn-primary">confirm</button>
+        </form>
+    </div>
 </div>
-
 
 @section scripts{
-<script src="~/lib/toastify-js/toastify.min.js"> </script>
+<script src="~/lib/toastify-js/toastify.min.js"></script>
 <script>
-
-    $(document).ready(function(){
-
+    $(document).ready(function () {
         Toastify({
-            text:"Welcome!",
-            duration:3000,
+            text: "Welcome!",
+            duration: 1500,
             style: {
-                background: "linear-gradient(to right, #00B09B, #96C96D)"
-            }
-
+                background: "linear-gradient(to right, #00B09B, #96C96D)",
+                cursor: "default",
+            },
+            position: "center",
+            stopOnFocus: false,
+            onClick: null,
         }).showToast();
-
-        //console.log($.ajax({url: '/api/issues'}));
 
         $("#issuesTable").DataTable({
             ajax: {
                 url: "/api/issues",
-                dataSrc: ""     // object that contains the data, empty if not nested
+                dataSrc: "", // object that contains the data, empty if not nested
             },
-            columns:[
+            columns: [
                 {
-                    data:"id",
-                    render: function(data, type, issue) {
-                        return "<a href='/issues/details/" + issue.id + "' >BT-" + data + "</a>";
-                    }
+                    data: "id",
+                    render: function (data, type, issue) {
+                        return (
+                            "<a href='/issues/details/" +
+                            issue.id +
+                            "' >BT-" +
+                            data +
+                            "</a>"
+                        );
+                    },
                 },
                 {
-                    data:"title",
-                    render: function(data, type, issue) {
-                        return "<a href='/issues/details/" + issue.id + "' >BT-" + data + "</a>";
-                    }
+                    data: "title",
+                    render: function (data, type, issue) {
+                        return (
+                            "<a href='/issues/details/" + issue.id + "' >" + data + "</a>"
+                        );
+                    },
                 },
                 {
-                    data:"status.name",
-                },
-                {
-                    data:"priority.name",
-                },
-                {
-                    data:"project.name",
-                },
-                {
-                    data:"createdDate"
+                    data: "status.name",
 
                 },
                 {
-                    data:"updatedDate",
+                    data: "priority.name",
                 },
                 {
-                    data:"resolvedDate",
+                    data: "project.name",
                 },
                 {
-                    data:"id",
-                    render: function(data, type, issue) {
+                    data: "createdDate",
+                    render: (data) => {
+                        let date = new Date(data);
+                        return date.toLocaleString();
+                    },
+                },
+                {
+                    data: "updatedDate",
+                    render: (data) => {
+                        if (data == null) return "Not worked.";
+
+                        let date = new Date(data);
+                        return date.toLocaleString();
+                    },
+                },
+                {
+                    data: "resolvedDate",
+                },
+                {
+                    data: "id",
+                    render: function (data, type, issue) {
                         return (
                             `<div class="d-flex justify-content-between gap-2">
-                                    <a href="issues/edit/`+issue.id+`" class=" btn w-50 btn-sm btn-secondary">Edit</a>
-                                    <button data-issue-id="`+issue.id+`" class="btn btn-danger js-close">Close</button>
+                                    <a href="issues/edit/` +
+                            issue.id +
+                            `" class=" btn w-50 btn-sm btn-secondary">Edit</a>
+                                    <button data-issue-id="` +
+                            issue.id +
+                            `" class="btn btn-danger js-close">Close</button>
                                 </div>
                             <div class="d-flex justify-content-center mt-2  ">
-                                <button type="button" class="btn btn-danger btn-rounded mb-4 ">
+                                <button  issueId=` +
+                            issue.id +
+                            ` type="button" class="btn btn-danger btn-rounded mb-4 js-prioritize"  data-toggle="modal" data-target="#prioritizeFormModal">
                                     Prioritize
                                 </button>
                             </div>`
-                        )
-                    }
-                }
-            ]
+                        );
+                    },
+                },
+            ],
+            createdRow: function (row, data, dataIndex) {
+                $(row).find(":eq(5)").addClass("priorityCell")
+                $(row).find(":eq(5)").attr("issueId", data.id)
+            }
         });
 
+        // FILTERS
 
-    // FILTERS
+        //RESOLVED
+        $("#hide-resolved").on("click", () => {
+            $("tbody tr").filter(function () { });
+        });
 
-        //RESOLVE
-        $("#hide-resolved").on("click", () =>{
-            $("tbody tr").filter(function () {
+        // MODALS
+        //show
 
+        var button;
+
+        $("#issuesTable").on("click", ".js-prioritize", function (event) {
+            // get the button for future reference/
+            button = $(event.target);
+            //show the modal
+            $("#prioritizeModal").modal("show");
+        });
+
+        // populate the title and selected priority
+        $("#prioritizeModal").on("show.bs.modal", async function (event) {
+            // get issue ID from button
+            let issueId = button.attr("issueId");
+            //get a reference to the modal in order to search elements.
+            let modal = $(this);
+            // call API for, get the issue
+            let issue = await $.ajax({ url: "/api/issues/" + issueId });
+            // Populate the modal
+            modal.find(".modal-title").text("Prioritize issue BT-" + issue.id);
+            modal.find(".issue-description").text(issue.title);
+            // disable the current priority of the issue and enable the rest
+            let buttons = modal.find(".form-check-input"); // get the buttons
+            buttons.removeAttr("disabled"); // enable all
+            buttons[issue.priorityId - 1].setAttribute("disabled", "disabled"); // disable the current priority for the id
+            buttons.attr("issueId", issueId); //insert the user Id for ease of access when post
+
+        });
+
+        // $("#prioritizeModal").on("show.bs.modal", function (event) { });
+
+
+        $(".js-prioritize").on("click", function () {
+            // get the variables from the form.
+            let selectedOption = $(".form-check-input").filter(":checked");
+            let issueId = selectedOption.attr("IssueId");
+            let priorityId = parseInt(selectedOption.attr("value"));
+            let priorityText = selectedOption.siblings().text();
+            let description = $("#message-text").val().toString();
+
+            $("#prioritizeModal").modal("hide");
+
+            //post using ajax
+
+            $.ajax({
+                url: '/api/issues/prioritize/' + issueId,
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                dataType: "json",
+                data: JSON.stringify({
+                    description: description,
+                    priorityId: priorityId,
+                }),
+                success: () => {
+                    // update the text of the cell
+                    $(".priorityCell").filter((i, e) => e.getAttribute("issueId") === "20").text(priorityText)
+
+                    Toastify({
+                        text: "Success!",
+                        duration: 1500,
+                        style: {
+                            background: "linear-gradient(to right, #00B09B, #96C96D)",
+                            cursor: "default",
+                        },
+                        position: "center",
+                        stopOnFocus: false,
+                        onClick: null,
+                    }).showToast();
+                },
+                error: () => {
+                    Toastify({
+                        text: "Something went wrong.",
+                        duration: 1500,
+                        style: {
+                            background: "linear-gradient(to right, #EE4242, #990201)",
+                            cursor: "default",
+                        },
+                        position: "center",
+                        stopOnFocus: false,
+                        onClick: null,
+                    }).showToast();
+
+                }
             })
-        })
 
+        });
 
-
-
-
-    // MODALS
-        $("#modal-btn").on("click", () => {
-            $("#exampleModal").modal("show")
-        })
-
-        $('#myModal').on('shown.bs.modal', function () {
-            console.log("ASD")
-            $('#myInput').trigger('focus')
-        })
-
-
-
-    // CLOSE ISSUE
-        $("#issuesTable").on("click", ".js-close", function() {
-
+        // CLOSE ISSUEw
+        $("#issuesTable").on("click", ".js-close", function () {
             let status = $(this).parent().parent().siblings().first().next().next();
-            console.log(status)
-            if (status.text() == "Closed"){
+            console.log(status);
+            if (status.text() == "Closed") {
                 Toastify({
                     text: "This issue is already closed!",
-                    duration:3000,
-                    offset:{
+                    duration: 3000,
+                    offset: {
                         x: 150,
-                        y: 150
+                        y: 150,
                     },
                     style: {
                         background: "linear-gradient(to right, #EE4242, #990201)",
                         fontSize: "20px",
                         position: "center",
-                    }
+                    },
                 }).showToast();
-            }
-
-            else if (confirm("Are you sure you want to close this issue?")){
-
+            } else if (confirm("Are you sure you want to close this issue?")) {
                 status.text("Closed");
                 $.ajax({
-                    url :"api/issues/" +$(this).attr("data-issue-id"),
+                    url: "api/issues/" + $(this).attr("data-issue-id"),
                     method: "DELETE",
                     success: () => {
                         console.log("succes");
                     },
-                    error: () => {
-
-                    }
-                })
+                    error: () => { },
+                });
             }
         });
-
-
-
     });
 </script>
 }
+</BugTracker.Models.Issue>

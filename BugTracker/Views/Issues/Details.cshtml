@@ -57,8 +57,8 @@
                                     @{
                                         if (Model.StatusId == Status.Resolved)
                                         {
-                                            <dt>Date Resolved:</dt>
-                                            <dd>@Model.ResolvedDate</dd>
+                                                    <dt>Date Resolved:</dt>
+                                                    <dd>@Model.ResolvedDate</dd>
                                         }
                                     }
                                     <dt>Last Updated:</dt>
@@ -90,7 +90,6 @@
                                                 @foreach (var activity in Model.Activities.Reverse())
                                                 {
                                                     @Html.Partial("_ActivityEntry", activity)
-
                                                 }
                                             </div>
                                         </div>
@@ -130,12 +129,12 @@
                     @{
                         if (User.IsInRole("Developer"))
                         {
-                            <a href="#" class="btn btn-xs btn-primary">Reassign</a>
+                                    <a href="#" class="btn btn-xs btn-primary">Reassign</a>
 
                         }
                         if (User.IsInRole("Administrator"))
                         {
-                            <a href="#" class="btn btn-xs btn-danger">Close</a>
+                                    <a href="#" class="btn btn-xs btn-danger">Close</a>
                         }
 
                     }

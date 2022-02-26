@@ -1,14 +1,7 @@
-:root {
-    --main-bg-color: #E6F5EC;
-    --color-accent-light: #D9A7A5;
-    --color-accent: #8F4E4A;
-    --color-primary: #A5D9B9;
-    --color-secondary: #E9CDBF;
-}
+
 
 html {
     font-size: 14px;
-    background-color: var(--main-bg-color)
 }
 
 @media (min-width: 768px) {
@@ -27,7 +20,7 @@ body {
 }
 
 #BugTrackerIcon {
-    height: 3rem;
+    height: 2rem;
     width: auto;
 }
 
@@ -38,29 +31,23 @@ body {
 }
 
 #issuesTable {
-    background-color: #748C85;
-    border: 1px solid #DDD;
     border-radius: 8px;
     overflow: hidden
 }
 
 thead th {
-    color: #DDD;
     vertical-align: middle;
     font-size: 1rem;
 }
 
 tr {
-    border: 0px solid white;
 }
 
 
 #issuesTable tr:nth-child(2n) {
-    background-color: #C9D9D4
 }
 
 a {
-    color: var(--color-accent)
 }
 
 input, textarea {

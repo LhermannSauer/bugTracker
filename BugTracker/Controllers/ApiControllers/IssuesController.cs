@@ -1,4 +1,6 @@
-﻿namespace BugTracker.Controllers.ApiControllers
+﻿using BugTracker.Models.viewModels;
+
+namespace BugTracker.Controllers.ApiControllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -12,6 +14,7 @@
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetIssues()
         {
             var issues = await _context.Issues
@@ -62,7 +65,40 @@
             return RedirectToAction("Index", "Issues");
         }
 
+        [HttpPost("prioritize/{id:int}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> PrioritizeIssue(int id, PrioritizeFormViewModel model)
+        {
+            // get the issue with the ID 
+            var issue = await _context.Issues.SingleAsync(i => i.Id == id);
+            if (issue == null)
+            {
+                return NotFound();
+            }
 
+            //set the issue to the priorityid
+            issue.PriorityId = model.PriorityId;
+
+            //get the user
+            var user = await _context.Users.SingleAsync(u => u.UserName == HttpContext.User.Identity.Name);
+
+            // post an activity with the message as the description, getting user, and setting the message to "xxxx changed the priority to xxx"
+            var activity = new Activity
+            {
+                DateCreated = DateTime.Now,
+                Description = model.Description,
+                IssueId = id,
+                UserId = user.Id,
+                UpdatedStatus = false,
+                ReassignedIssue = false,
+                ResolvedIssue = false,
+            };
+            await _context.Activities.AddAsync(activity);
+            await _context.SaveChangesAsync();
+
+            // return to the index of issues
+            return Ok(activity);
+        }
     }
 }
 

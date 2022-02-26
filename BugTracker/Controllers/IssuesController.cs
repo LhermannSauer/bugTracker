@@ -203,7 +203,23 @@ namespace BugTracker.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Prioritize(int id, int priorityId)
+        {
+            if (!HttpContext.User.IsInRole("CanPrioritizeIssues"))
+                return Unauthorized("You cannot do that.");
 
+            var issue = await _context.Issues.SingleOrDefaultAsync(i => i.Id == id);
+
+            if (issue == null)
+                return NotFound();
+
+            issue.PriorityId = priorityId;
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+        }
 
         private bool IssueExists(int id)
         {
