@@ -9,11 +9,9 @@
 <h1>Issues</h1>
 
 
-@* TEST *@
-<div class="container w-50 m-auto">@Html.Partial("_PrioritizeOptions")</div>
-
 <a asp-action="Edit" class="btn-primary btn p-2">New Issue</a>
 
+@*TABLE*@
 <div class="container mt-5">
     <div class="">
         <input id="hide-closed" name="hide-closed" type="checkbox" class="form-checkbox" />
@@ -44,8 +42,9 @@
     </table>
 </div>
 
+@*MODAL*@
 <div class="modal fade bd-example-modal-sm" id="prioritizeFormModal" tabindex="0" role="radio"
-    aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="false">
+     aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="false">
     <div class="modal-dialog">
         <form method="POST" action="/issues/prioritize" id="" class="form-control">
             <input type="radio" name="group1" id="radio-1" value="1" />
@@ -77,232 +76,253 @@
 <script src="~/lib/toastify-js/toastify.min.js"></script>
 <script>
     $(document).ready(function () {
-        Toastify({
-            text: "Welcome!",
-            duration: 1500,
-            style: {
-                background: "linear-gradient(to right, #00B09B, #96C96D)",
-                cursor: "default",
-            },
-            position: "center",
-            stopOnFocus: false,
-            onClick: null,
-        }).showToast();
 
-        $("#issuesTable").DataTable({
-            ajax: {
-                url: "/api/issues",
-                dataSrc: "", // object that contains the data, empty if not nested
-            },
-            columns: [
-                {
-                    data: "id",
-                    render: function (data, type, issue) {
-                        return (
-                            "<a href='/issues/details/" +
-                            issue.id +
-                            "' >BT-" +
-                            data +
-                            "</a>"
-                        );
-                    },
+        // welcome
+            Toastify({
+                text: "Welcome!",
+                duration: 1500,
+                style: {
+                    background: "linear-gradient(to right, #00B09B, #96C96D)",
+                    cursor: "default",
                 },
-                {
-                    data: "title",
-                    render: function (data, type, issue) {
-                        return (
-                            "<a href='/issues/details/" + issue.id + "' >" + data + "</a>"
-                        );
-                    },
-                },
-                {
-                    data: "status.name",
+                position: "center",
+                stopOnFocus: false,
+                onClick: null,
+            }).showToast();
 
+        // data table
+            $("#issuesTable").DataTable({
+                ajax: {
+                    url: "/api/issues",
+                    dataSrc: "", // object that contains the data, empty if not nested
                 },
-                {
-                    data: "priority.name",
-                },
-                {
-                    data: "project.name",
-                },
-                {
-                    data: "createdDate",
-                    render: (data) => {
-                        let date = new Date(data);
-                        return date.toLocaleString();
+                columns: [
+                    {
+                        data: "id",
+                        render: function (data, type, issue) {
+                            return (
+                                "<a href='/issues/details/" +
+                                issue.id +
+                                "' >BT-" +
+                                data +
+                                "</a>"
+                            );
+                        },
                     },
-                },
-                {
-                    data: "updatedDate",
-                    render: (data) => {
-                        if (data == null) return "Not worked.";
+                    {
+                        data: "title",
+                        render: function (data, type, issue) {
+                            return (
+                                "<a href='/issues/details/" + issue.id + "' >" + data + "</a>"
+                            );
+                        },
+                    },
+                    {
+                        data: "status.name",
 
-                        let date = new Date(data);
-                        return date.toLocaleString();
                     },
-                },
-                {
-                    data: "resolvedDate",
-                },
-                {
-                    data: "id",
-                    render: function (data, type, issue) {
-                        return (
-                            `<div class="d-flex justify-content-between gap-2">
-                                    <a href="issues/edit/` +
-                            issue.id +
-                            `" class=" btn w-50 btn-sm btn-secondary">Edit</a>
-                                    <button data-issue-id="` +
-                            issue.id +
-                            `" class="btn btn-danger js-close">Close</button>
-                                </div>
-                            <div class="d-flex justify-content-center mt-2  ">
-                                <button  issueId=` +
-                            issue.id +
-                            ` type="button" class="btn btn-danger btn-rounded mb-4 js-prioritize"  data-toggle="modal" data-target="#prioritizeFormModal">
-                                    Prioritize
-                                </button>
-                            </div>`
-                        );
+                    {
+                        data: "priority.name",
                     },
-                },
-            ],
-            createdRow: function (row, data, dataIndex) {
-                $(row).find(":eq(5)").addClass("priorityCell")
-                $(row).find(":eq(5)").attr("issueId", data.id)
-            }
-        });
+                    {
+                        data: "project.name",
+                    },
+                    {
+                        data: "createdDate",
+                        render: (data) => {
+                            let date = new Date(data);
+                            return date.toLocaleString();
+                        },
+                    },
+                    {
+                        data: "updatedDate",
+                        render: (data) => {
+                            if (data == null) return "Not worked.";
+
+                            let date = new Date(data);
+                            return date.toLocaleString();
+                        },
+                    },
+                    {
+                        data: "resolvedDate",
+                    },
+                    {
+                        data: "id",
+                        render: function (data, type, issue) {
+                            return (
+                                `<div class="d-flex justify-content-between gap-2">
+                                        <a href="issues/edit/` +
+                                issue.id +
+                                `" class=" btn w-50 btn-sm btn-secondary">Edit</a>
+                                        <button data-issue-id="` +
+                                issue.id +
+                                `" class="btn btn-danger js-close">Close</button>
+                                    </div>
+                                <div class="d-flex justify-content-center mt-2  ">
+                                    <button  issueId=` +
+                                issue.id +
+                                ` type="button" class="btn btn-danger btn-rounded mb-4 js-prioritize"  data-toggle="modal" data-target="#prioritizeFormModal">
+                                        Prioritize
+                                    </button>
+                                </div>`
+                            );
+                        },
+                    },
+                ],
+                createdRow: function (row, data, dataIndex) {
+                    $(row).find(":eq(5)").addClass("priorityCell")
+                    $(row).find(":eq(4)").addClass("statusCell")
+                    $(row).find(":eq(5)").attr("issueId", data.id)
+                }
+            });
 
         // FILTERS
 
-        //RESOLVED
-        $("#hide-resolved").on("click", () => {
-            $("tbody tr").filter(function () { });
-        });
+            //RESOLVED
+            $("#hide-resolved").on("click", () =>{
+                hideRow("statusCell","Resolved")
+            });
+            //Closed
+            $("#hide-closed").on("click", () =>{
+                hideRow("statusCell","Closed")
+            });
+
 
         // MODALS
-        //show
+            var button;
 
-        var button;
-
-        $("#issuesTable").on("click", ".js-prioritize", function (event) {
-            // get the button for future reference/
-            button = $(event.target);
-            //show the modal
-            $("#prioritizeModal").modal("show");
-        });
-
-        // populate the title and selected priority
-        $("#prioritizeModal").on("show.bs.modal", async function (event) {
-            // get issue ID from button
-            let issueId = button.attr("issueId");
-            //get a reference to the modal in order to search elements.
-            let modal = $(this);
-            // call API for, get the issue
-            let issue = await $.ajax({ url: "/api/issues/" + issueId });
-            // Populate the modal
-            modal.find(".modal-title").text("Prioritize issue BT-" + issue.id);
-            modal.find(".issue-description").text(issue.title);
-            // disable the current priority of the issue and enable the rest
-            let buttons = modal.find(".form-check-input"); // get the buttons
-            buttons.removeAttr("disabled"); // enable all
-            buttons[issue.priorityId - 1].setAttribute("disabled", "disabled"); // disable the current priority for the id
-            buttons.attr("issueId", issueId); //insert the user Id for ease of access when post
-
-        });
-
-        // $("#prioritizeModal").on("show.bs.modal", function (event) { });
+            //Show
+            $("#issuesTable").on("click", ".js-prioritize", function (event) {
+                // get the button for future reference/
+                button = $(event.target);
+                //show the modal
+                $("#prioritizeModal").modal("show");
+            });
 
 
-        $(".js-prioritize").on("click", function () {
-            // get the variables from the form.
-            let selectedOption = $(".form-check-input").filter(":checked");
-            let issueId = selectedOption.attr("IssueId");
-            let priorityId = parseInt(selectedOption.attr("value"));
-            let priorityText = selectedOption.siblings().text();
-            let description = $("#message-text").val().toString();
+            // populate the title and selected priority of the modal
+            $("#prioritizeModal").on("show.bs.modal", async function (event) {
+                // get issue ID from button
+                let issueId = button.attr("issueId");
+                //get a reference to the modal in order to search elements.
+                let modal = $(this);
+                // call API for, get the issue
+                let issue = await $.ajax({ url: "/api/issues/" + issueId });
+                // Populate the modal
+                modal.find(".modal-title").text("Prioritize issue BT-" + issue.id);
+                modal.find(".issue-description").text(issue.title);
+                // disable the current priority of the issue and enable the rest
+                let buttons = modal.find(".form-check-input"); // get the buttons
+                buttons.removeAttr("disabled"); // enable all
+                buttons[issue.priorityId - 1].setAttribute("disabled", "disabled"); // disable the current priority for the id
+                buttons.attr("issueId", issueId); //insert the user Id for ease of access when post
 
-            $("#prioritizeModal").modal("hide");
+            });
 
-            //post using ajax
 
-            $.ajax({
-                url: '/api/issues/prioritize/' + issueId,
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                method: "POST",
-                dataType: "json",
-                data: JSON.stringify({
-                    description: description,
-                    priorityId: priorityId,
-                }),
-                success: () => {
-                    // update the text of the cell
-                    $(".priorityCell").filter((i, e) => e.getAttribute("issueId") === "20").text(priorityText)
+            // ONSHOW
+            // $("#prioritizeModal").on("show.bs.modal", function (event) { });
 
+            // send button
+            $(".js-prioritize").on("click", function () {
+                // get the variables from the form.
+                let selectedOption = $(".form-check-input").filter(":checked");
+                let issueId = selectedOption.attr("IssueId");
+                let priorityId = parseInt(selectedOption.attr("value"));
+                let priorityText = selectedOption.siblings().text();
+                let description = $("#message-text").val().toString();
+
+                $("#prioritizeModal").modal("hide");
+
+                //post using ajax
+
+                $.ajax({
+                    url: '/api/issues/prioritize/' + issueId,
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    method: "POST",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        description: description,
+                        priorityId: priorityId,
+                    }),
+                    success: () => {
+                        // update the text of the cell
+                        $(".priorityCell").filter((i, e) => e.getAttribute("issueId") === "20").text(priorityText)
+
+                        Toastify({
+                            text: "Success!",
+                            duration: 1500,
+                            style: {
+                                background: "linear-gradient(to right, #00B09B, #96C96D)",
+                                cursor: "default",
+                            },
+                            position: "center",
+                            stopOnFocus: false,
+                            onClick: null,
+                        }).showToast();
+                    },
+                    error: () => {
+                        Toastify({
+                            text: "Something went wrong.",
+                            duration: 1500,
+                            style: {
+                                background: "linear-gradient(to right, #EE4242, #990201)",
+                                cursor: "default",
+                            },
+                            position: "center",
+                            stopOnFocus: false,
+                            onClick: null,
+                        }).showToast();
+
+                    }
+                })
+            });
+
+
+        // CLOSE ISSUE
+            $("#issuesTable").on("click", ".js-close", function () {
+                let status = $(this).parent().parent().siblings().first().next().next();
+                console.log(status);
+                if (status.text() == "Closed") {
                     Toastify({
-                        text: "Success!",
-                        duration: 1500,
-                        style: {
-                            background: "linear-gradient(to right, #00B09B, #96C96D)",
-                            cursor: "default",
+                        text: "This issue is already closed!",
+                        duration: 3000,
+                        offset: {
+                            x: 150,
+                            y: 150,
                         },
-                        position: "center",
-                        stopOnFocus: false,
-                        onClick: null,
-                    }).showToast();
-                },
-                error: () => {
-                    Toastify({
-                        text: "Something went wrong.",
-                        duration: 1500,
                         style: {
                             background: "linear-gradient(to right, #EE4242, #990201)",
-                            cursor: "default",
+                            fontSize: "20px",
+                            position: "center",
                         },
-                        position: "center",
-                        stopOnFocus: false,
-                        onClick: null,
                     }).showToast();
-
+                } else if (confirm("Are you sure you want to close this issue?")) {
+                    status.text("Closed");
+                    $.ajax({
+                        url: "api/issues/" + $(this).attr("data-issue-id"),
+                        method: "DELETE",
+                        success: () => {
+                            console.log("succes");
+                        },
+                        error: () => { },
+                    });
                 }
-            })
+            });
 
-        });
+        // helpers
+            function hideRow(childrenClass, filter){
 
-        // CLOSE ISSUEw
-        $("#issuesTable").on("click", ".js-close", function () {
-            let status = $(this).parent().parent().siblings().first().next().next();
-            console.log(status);
-            if (status.text() == "Closed") {
-                Toastify({
-                    text: "This issue is already closed!",
-                    duration: 3000,
-                    offset: {
-                        x: 150,
-                        y: 150,
-                    },
-                    style: {
-                        background: "linear-gradient(to right, #EE4242, #990201)",
-                        fontSize: "20px",
-                        position: "center",
-                    },
-                }).showToast();
-            } else if (confirm("Are you sure you want to close this issue?")) {
-                status.text("Closed");
-                $.ajax({
-                    url: "api/issues/" + $(this).attr("data-issue-id"),
-                    method: "DELETE",
-                    success: () => {
-                        console.log("succes");
-                    },
-                    error: () => { },
-                });
+                $("tbody tr").each(function () {
+                   if ($(this).children("."+childrenClass).filter((i, elem) => elem.innerText === filter).length > 0){
+                       $(this).toggle();
+                   }
+                })
             }
-        });
+
     });
 </script>
 }
-</BugTracker.Models.Issue>

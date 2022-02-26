@@ -28,6 +28,9 @@ namespace BugTracker.Controllers
                             .Include(i => i.Project)
                             .ToListAsync();
 
+            if (issues == null)
+                return NotFound();
+
             return View(issues);
         }
 

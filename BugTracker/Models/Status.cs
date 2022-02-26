@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
 
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         //for access in Issues Controller (index)
         public static byte Resolved = 4;

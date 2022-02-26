@@ -1,0 +1,28 @@
+allows someone to submit a defect
+assigned to a developer that works and closed the ticket
+issues routed to a production team
+
+Workflow aroud
+
+
+------------
+MUST 
+Framework >> MVC
+Professional UI 
+Auth > Auth zero
+Solve a business problem.
+Attachments
+----------
+Software requirement specification
+
+Models > 
+	Ticket: id, title, description, activity, status, dateCreated, 
+	Categories
+	Developers
+	Teams
+	
+	
+
+--------------
+AVOID
+
