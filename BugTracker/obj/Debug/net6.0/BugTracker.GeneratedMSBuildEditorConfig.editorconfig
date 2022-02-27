@@ -8,93 +8,93 @@ build_property.PlatformNeutralAssembly =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = BugTracker
 build_property.RootNamespace = BugTracker
-build_property.ProjectDir = C:\Projects\Bug Tracker\BugTracker\
+build_property.ProjectDir = C:\Projects\Bug Tracker\bugtracker\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Projects\Bug Tracker\BugTracker
+build_property.MSBuildProjectDirectory = C:\Projects\Bug Tracker\bugtracker
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Projects/Bug Tracker/BugTracker/Areas/Identity/Pages/_ViewStart.cshtml]
+[C:/Projects/Bug Tracker/bugtracker/Areas/Identity/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/Bug Tracker/BugTracker/Views/Activities/ActivityForm.cshtml]
+[C:/Projects/Bug Tracker/bugtracker/Views/Activities/ActivityForm.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWN0aXZpdGllc1xBY3Rpdml0eUZvcm0uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/Bug Tracker/BugTracker/Views/Home/Index.cshtml]
+[C:/Projects/Bug Tracker/bugtracker/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/Bug Tracker/BugTracker/Views/Home/Privacy.cshtml]
+[C:/Projects/Bug Tracker/bugtracker/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/Bug Tracker/BugTracker/Views/Issues/Delete.cshtml]
+[C:/Projects/Bug Tracker/bugtracker/Views/Issues/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXNzdWVzXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/Bug Tracker/BugTracker/Views/Issues/Details.cshtml]
+[C:/Projects/Bug Tracker/bugtracker/Views/Issues/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXNzdWVzXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/Bug Tracker/BugTracker/Views/Issues/Index.cshtml]
+[C:/Projects/Bug Tracker/bugtracker/Views/Issues/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXNzdWVzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/Bug Tracker/BugTracker/Views/Issues/IssueForm.cshtml]
+[C:/Projects/Bug Tracker/bugtracker/Views/Issues/IssueForm.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXNzdWVzXElzc3VlRm9ybS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/Bug Tracker/BugTracker/Views/Roles/Index.cshtml]
+[C:/Projects/Bug Tracker/bugtracker/Views/Roles/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/Bug Tracker/BugTracker/Views/Roles/RoleForm.cshtml]
+[C:/Projects/Bug Tracker/bugtracker/Views/Roles/RoleForm.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sZXNcUm9sZUZvcm0uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/Bug Tracker/BugTracker/Views/Shared/Error.cshtml]
+[C:/Projects/Bug Tracker/bugtracker/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/Bug Tracker/BugTracker/Views/Shared/NewActivityForm.cshtml]
+[C:/Projects/Bug Tracker/bugtracker/Views/Shared/NewActivityForm.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXE5ld0FjdGl2aXR5Rm9ybS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/Bug Tracker/BugTracker/Views/Shared/NewIssueForm.cshtml]
+[C:/Projects/Bug Tracker/bugtracker/Views/Shared/NewIssueForm.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXE5ld0lzc3VlRm9ybS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/Bug Tracker/BugTracker/Views/Shared/_ActivityEntry.cshtml]
+[C:/Projects/Bug Tracker/bugtracker/Views/Shared/_ActivityEntry.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BY3Rpdml0eUVudHJ5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/Bug Tracker/BugTracker/Views/Shared/_LoginPartial.cshtml]
+[C:/Projects/Bug Tracker/bugtracker/Views/Shared/_LoginPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/Bug Tracker/BugTracker/Views/Shared/_NavBar.cshtml]
+[C:/Projects/Bug Tracker/bugtracker/Views/Shared/_NavBar.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9OYXZCYXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/Bug Tracker/BugTracker/Views/Shared/_PrioritizeModal.cshtml]
+[C:/Projects/Bug Tracker/bugtracker/Views/Shared/_PrioritizeModal.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Qcmlvcml0aXplTW9kYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/Bug Tracker/BugTracker/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Projects/Bug Tracker/bugtracker/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/Bug Tracker/BugTracker/Views/_ViewImports.cshtml]
+[C:/Projects/Bug Tracker/bugtracker/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/Bug Tracker/BugTracker/Views/_ViewStart.cshtml]
+[C:/Projects/Bug Tracker/bugtracker/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projects/Bug Tracker/BugTracker/Views/Shared/_Layout.cshtml]
+[C:/Projects/Bug Tracker/bugtracker/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-cl261elwq8

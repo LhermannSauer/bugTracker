@@ -53,6 +53,10 @@
 <script>
     $(document).ready(function () {
 
+        // VARIABLES
+        let hideResolved = $("#hide-resolved");
+        let hideClosed = $("#hide-closed");
+
         // welcome
             Toastify({
                 text: "Welcome!",
@@ -76,14 +80,11 @@
                     {
                         data: "id",
                         render: function (data, type, issue) {
-                            return (
-                                "<a href='/issues/details/" +
-                                issue.id +
-                                "' >BT-" +
-                                data +
-                                "</a>"
-                            );
+                                return type === "display" || type === "filter" ?
+                                "<a href='/issues/details/" + issue.id +"' >BT-" +data +"</a>" :
+                                data;
                         },
+
                     },
                     {
                         data: "title",
@@ -178,18 +179,27 @@
                         actionColumn.toggle()
                         actionHeader.toggle()
                     }
+
+                    if(hideResolved.is(":checked"))
+                        hideRow("statusCell","Resolved")
+
+                    if(hideClosed.is(":checked"))
+                        hideRow("statusCell","Closed")
                 }
             });
 
 
         // FILTERS
+            // get initial stated for traversing back to the page with previous options selected.
+
+
 
             //RESOLVED
-            $("#hide-resolved").on("click", () =>{
+            hideResolved.on("click", () =>{
                 hideRow("statusCell","Resolved")
             });
             //Closed
-            $("#hide-closed").on("click", () =>{
+            hideClosed.on("click", () =>{
                 hideRow("statusCell","Closed")
             });
 
