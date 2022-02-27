@@ -1,5 +1,6 @@
 ﻿global using BugTracker.Data;
 global using BugTracker.Models;
+global using BugTracker.Models.viewModels;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Identity;
 global using Microsoft.AspNetCore.Mvc;

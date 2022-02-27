@@ -1,0 +1,21 @@
+﻿@model BugTracker.Models.viewModels.RoleFormViewModel
+
+@{
+    var title = Model.Id == null ? "Create a new role" : "Edit role";
+    var buttonText = Model.Id == null ? "Create" : "Save";
+}
+
+
+<h1 class="">@title</h1>
+<a asp-action="Index" class="btn btn-secondary">Back</a>
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form asp-action="Save" method="post">
+    <div class="form-groud mt-2">
+        @Html.LabelFor(m => m.Name)
+        @Html.TextBoxFor(m => m.Name, new {@class= "form-control"})
+    </div>
+
+    @Html.HiddenFor(m => m.Id)
+    <button type="submit" class="btn btn-primary d-block m-auto mt-2">@buttonText</button>
+</form>

@@ -33,7 +33,7 @@
                 <th style="width: 8.88%">
                     @Html.DisplayNameFor(i => i.ResolvedDate)
                 </th>
-                <th class="text-center" data-class-name="Actions" style="width: 8.88%">
+                <th class="text-center" data-class-name="Actions" id="actions" style="width: 8.88%">
                     Actions
                 </th>
             </tr>
@@ -42,35 +42,11 @@
     </table>
 </div>
 
+
+
 @*MODAL*@
-<div class="modal fade bd-example-modal-sm" id="prioritizeFormModal" tabindex="0" role="radio"
-     aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="false">
-    <div class="modal-dialog">
-        <form method="POST" action="/issues/prioritize" id="" class="form-control">
-            <input type="radio" name="group1" id="radio-1" value="1" />
-            <label for="radio-1">
-                <span class="radio">Critical</span>
-            </label>
-            <input type="radio" name="group1" id="radio-2" value="2" />
-            <label for="radio-2">
-                <span class="radio">High</span>
-            </label>
-            <input type="radio" name="group1" id="radio-3" value="3" />
-            <label for="radio-3">
-                <span class="radio"> Medium High </span>
-            </label>
-            <input type="radio" name="group1" id="radio-4" value="4" />
-            <label for="radio-4">
-                <span class="radio"> Medium Low </span>
-            </label>
-            <input type="radio" name="group1" id="radio-5" value="5" />
-            <label for="radio-5">
-                <span class="radio">Low</span>
-            </label>
-            <button type="submit" class="btn btn-primary">confirm</button>
-        </form>
-    </div>
-</div>
+@Html.Partial("_prioritizeModal")
+
 
 @section scripts{
 <script src="~/lib/toastify-js/toastify.min.js"></script>
@@ -149,23 +125,37 @@
                     {
                         data: "id",
                         render: function (data, type, issue) {
-                            return (
-                                `<div class="d-flex justify-content-between gap-2">
-                                        <a href="issues/edit/` +
-                                issue.id +
-                                `" class=" btn w-50 btn-sm btn-secondary">Edit</a>
-                                        <button data-issue-id="` +
-                                issue.id +
-                                `" class="btn btn-danger js-close">Close</button>
-                                    </div>
-                                <div class="d-flex justify-content-center mt-2  ">
-                                    <button  issueId=` +
-                                issue.id +
-                                ` type="button" class="btn btn-danger btn-rounded mb-4 js-prioritize"  data-toggle="modal" data-target="#prioritizeFormModal">
-                                        Prioritize
-                                    </button>
-                                </div>`
-                            );
+                            let canPrioritizeIssues = `@User.IsInRole("CanPrioritizeIssues").ToString()` === "True";
+                            let canCloseIssues = `@User.IsInRole("CanCloseIssues").ToString()` === "True";
+                            let canEditIssues = `@User.IsInRole("CanPrioritizeIssues")` === "True";
+
+                            let render = "";
+
+                            //if (!(canPrioritizeIssues || canCloseIssues || canEditIssues))
+                            //    render +=  `<div class="">
+                            //                    <button data-issue-id="` + issue.id +`" class="btn btn-danger js-request-access btn-sm">Request Access</button>
+                            //                </div>`
+
+                            if(canCloseIssues || canEditIssues)
+                                render += '<div class="d-flex gap-2 w-100">'
+
+                            if (canEditIssues){
+                                render += `<a href="issues/edit/` +issue.id +`" class=" btn  btn-sm btn-secondary">Edit</a>`
+                            }
+                            if (canCloseIssues){
+                                render += `<button data-issue-id="` + issue.id +`" class="btn btn-sm btn-danger js-close">Close</button>`
+                            }
+                            if(canCloseIssues || canEditIssues)
+                                render += `</div>`
+                            if (canPrioritizeIssues){
+                                render += `<div class="d-block mt-2  ">
+                                                <button  issueId=` + issue.id +` type="button" class="btn btn-sm btn-danger btn-rounded w-100 js-prioritize"  data-bs-toggle="modal" data-bs-target="#prioritizeFormModal">
+                                                    Prioritize
+                                                </button>
+                                            </div>`
+                            }
+
+                            return render;
                         },
                     },
                 ],
@@ -173,8 +163,24 @@
                     $(row).find(":eq(5)").addClass("priorityCell")
                     $(row).find(":eq(4)").addClass("statusCell")
                     $(row).find(":eq(5)").attr("issueId", data.id)
+                },
+                initComplete: function (){
+                    let actionHeader = $("#actions")
+                    let actionColumn = $("tbody td:nth-child(7)")
+                    let actionNumber = $("tbody")
+                                            .children("tr")
+                                            .filter(function(i, elem) {
+                                                 return $(elem).children().last().is(":empty")})
+                                            .length
+
+
+                    if (actionNumber > 0){
+                        actionColumn.toggle()
+                        actionHeader.toggle()
+                    }
                 }
             });
+
 
         // FILTERS
 
@@ -285,7 +291,6 @@
         // CLOSE ISSUE
             $("#issuesTable").on("click", ".js-close", function () {
                 let status = $(this).parent().parent().siblings().first().next().next();
-                console.log(status);
                 if (status.text() == "Closed") {
                     Toastify({
                         text: "This issue is already closed!",
@@ -306,7 +311,6 @@
                         url: "api/issues/" + $(this).attr("data-issue-id"),
                         method: "DELETE",
                         success: () => {
-                            console.log("succes");
                         },
                         error: () => { },
                     });
@@ -322,7 +326,6 @@
                    }
                 })
             }
-
     });
 </script>
 }

@@ -16,20 +16,60 @@
                 ModelState.AddModelError("", error.Description);
         }
 
-        public IActionResult Create() => View();
+        [HttpGet]
+        public IActionResult Edit(string? id)
+        {
+            var viewModel = new RoleFormViewModel();
+
+            if (id == null)
+                return View("RoleForm", viewModel);
+
+            var role = roleManager.Roles.Where(r => r.Id == id).FirstOrDefault();
+
+            if (role == null)
+                return NotFound();
+
+            viewModel.Name = role.Name;
+            viewModel.Id = role.Id;
+            return View("RoleForm", viewModel);
+
+        }
+
 
         [HttpPost]
-        public async Task<IActionResult> Create([Required] string name)
+        public async Task<IActionResult> Save(RoleFormViewModel viewModel)
         {
-            if (ModelState.IsValid)
+            // post from an update form
+            if (viewModel.Id != null)
             {
-                IdentityResult result = await roleManager.CreateAsync(new IdentityRole(name));
+                //get the role from the DB
+                var role = await roleManager.FindByIdAsync(viewModel.Id);
+
+                if (role == null)
+                {
+                    return NotFound();
+                }
+
+                // set the new name
+                IdentityResult result = await roleManager.SetRoleNameAsync(role, viewModel.Name);
+                // this has to be updated, may be the equivalent to _context.saveChanges()
+                await roleManager.UpdateAsync(role);
                 if (result.Succeeded)
                     return RedirectToAction("Index");
                 else
                     Errors(result);
             }
-            return View(name);
+
+            // Here it is a new Role.
+
+            IdentityResult result = await roleManager.CreateAsync(new IdentityRole(viewModel.Name));
+
+            if (result.Succeeded)
+                return RedirectToAction("Index");
+            else
+                Errors(result);
+
+            return View("RoleForm", viewModel);
         }
 
         [HttpPost]
