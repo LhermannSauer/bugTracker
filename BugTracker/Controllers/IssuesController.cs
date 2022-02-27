@@ -179,15 +179,6 @@
         }
 
 
-        public async Task<IActionResult> Prioritize(int? id, int? priorityId)
-        {
-            var issue = await _context.Issues.FirstOrDefaultAsync(i => i.Id == id);
-            issue.PriorityId = priorityId;
-
-            _context.SaveChangesAsync();
-
-            return RedirectToAction("Index");
-        }
 
         [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Close(int? id)

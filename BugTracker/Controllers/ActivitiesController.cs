@@ -127,6 +127,7 @@ namespace BugTracker.Controllers
                 ReassignedIssue = activity.ReassignedIssue,
                 DateCreated = DateTime.Now,
                 ResolvedIssue = activity.StatusId == Status.Resolved,
+                IsAutomaticallyGenerated = false
             };
 
 
@@ -170,6 +171,7 @@ namespace BugTracker.Controllers
                 UpdatedStatus = updatedStatus,
                 ReassignedIssue = false,
                 ResolvedIssue = false,
+                IsAutomaticallyGenerated = true,
             };
 
             newActivity.StatusId = updatedStatus ? statusId.Value : issue.StatusId;

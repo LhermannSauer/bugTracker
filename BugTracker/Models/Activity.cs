@@ -28,5 +28,9 @@
         public int? ReassignedToId { get; set; }
 
         public Developer? ReassignedTo { get; set; }
+
+        public bool? IsAutomaticallyGenerated { get; set; }
+
+
     }
 }

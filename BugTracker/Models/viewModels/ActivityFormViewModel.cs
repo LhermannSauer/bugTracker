@@ -31,5 +31,7 @@ namespace BugTracker.Models.viewModels
 
         [DevSelectedIfReassignedChecked]
         public int? ReassignToId { get; set; }
+
+        public bool? IsAutomaticallyGenerated { get; set; }
     }
 }

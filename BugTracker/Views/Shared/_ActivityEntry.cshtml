@@ -2,7 +2,10 @@
 
 @{
     string timeAgo;
+    string activityText;
+
     TimeSpan span = DateTime.Now - Model.DateCreated.Value;
+    // SPANTIME LOGIC
     if (span.Days > 365)
     {
         int years = (span.Days / 365);
@@ -34,27 +37,51 @@
         timeAgo = "just now";
     else timeAgo = string.Empty;
 
-    string activityText;
 
-    if (Model.ResolvedIssue.Value)
+    // MESSAGE LOGIC
+    if (Model.IsAutomaticallyGenerated.Value)
     {
-        activityText = " resolved the issue.";
-    }
-    else if (Model.ReassignedIssue.Value && Model.UpdatedStatus.Value)
-    {
-        activityText = " updated the status to " + Model.Status.Name + " and reassigned the issue to " + Model.ReassignedTo.User + ".";
-    }
-    else if (Model.ReassignedIssue.Value)
-    {
-        activityText = " reassigned the issue to " + Model.ReassignedTo.User + ".";
-    }
-    else if (Model.UpdatedStatus.Value)
-    {
-        activityText = " updated the status to " + Model.Status.Name + ".";
+        // edit
+        if (Model.UpdatedStatus.Value)
+        {
+            activityText = " closed the request.";
+        }
+        else if (Model.Description.Contains("Edit"))
+        {
+            activityText = " edited the request.";
+        }
+        else if (Model.Description.Contains("Created"))
+        {
+            activityText = " created the request.";
+        }
+        else
+        {
+            activityText = " prioritized the request.";
+        }
+
     }
     else
     {
-        activityText = " posted.";
+        if (Model.ResolvedIssue.Value)
+        {
+            activityText = " resolved the issue.";
+        }
+        else if (Model.ReassignedIssue.Value && Model.UpdatedStatus.Value)
+        {
+            activityText = " updated the status to " + Model.Status.Name + " and reassigned the issue to " + Model.ReassignedTo.User + ".";
+        }
+        else if (Model.ReassignedIssue.Value)
+        {
+            activityText = " reassigned the issue to " + Model.ReassignedTo.User + ".";
+        }
+        else if (Model.UpdatedStatus.Value)
+        {
+            activityText = " updated the status to " + Model.Status.Name + ".";
+        }
+        else
+        {
+            activityText = " posted.";
+        }
     }
 }
 
@@ -67,8 +94,14 @@
         <small class="pull-right">@timeAgo</small><br />
         <strong>@Model.User.UserName</strong>@activityText<br>
         <small class="text-muted">@Model.DateCreated.Value.ToString("dd/MMM/yy - HH:mm:ss")</small>
-        <div class="well">
-            @Model.Description
-        </div>
+        @{
+            if (!Model.IsAutomaticallyGenerated.Value)
+            {
+                
+            <div class="well">
+                    @Model.Description
+                </div>
+            }
+        }
     </div>
 </div>
