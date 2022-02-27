@@ -1,6 +1,4 @@
-﻿using BugTracker.Models.viewModels;
-
-namespace BugTracker.Controllers
+﻿namespace BugTracker.Controllers
 {
     [Authorize]
     public class IssuesController : Controller
@@ -82,12 +80,12 @@ namespace BugTracker.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
+            var userName = HttpContext.User.Identity.Name;
+            var user = _context.Users.Single(u => u.UserName == userName);
             // If id is 0, then it is a new issue
             if (issueForm.Id == 0)
             {
                 // get data of the user that submitted the form.
-                var userName = HttpContext.User.Identity.Name;
-                var user = _context.Users.Single(u => u.UserName == userName);
 
                 // Create the new object
                 var issue = new Issue()
@@ -102,8 +100,13 @@ namespace BugTracker.Controllers
                     CreatorId = user.Id,
                 };
 
+
+
                 // add it to the db
                 await _context.Issues.AddAsync(issue);
+                await _context.SaveChangesAsync();
+
+                PostActivity(issue, user.Id, "Created the Issue", Status.Open);
             }
             else // The id already exists in db
             {
@@ -119,7 +122,7 @@ namespace BugTracker.Controllers
                 // Set updated date to now
                 issueInDb.UpdatedDate = DateTime.Now;
                 ;
-
+                PostActivity(issueInDb, user.Id, "Issue Edited", Status.Open);
             }
             await _context.SaveChangesAsync();
 
@@ -227,6 +230,17 @@ namespace BugTracker.Controllers
         private bool IssueExists(int id)
         {
             return _context.Issues.Any(e => e.Id == id);
+        }
+
+        public void PostActivity(Issue issue,
+                                string userId,
+                                string message,
+                                int? statusId,
+                                bool updatedStatus = false)
+        {
+            var activitiesController = new ActivitiesController(_context);
+
+            activitiesController.AddActivityAsync(issue, userId, message, statusId, updatedStatus);
         }
     }
 }

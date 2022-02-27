@@ -1,5 +1,3 @@
-using BugTracker.Models.viewModels;
-
 namespace BugTracker.Controllers
 {
     [Authorize]
@@ -152,6 +150,32 @@ namespace BugTracker.Controllers
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Details", "Issues", new { id = issueInDb.Id });
+        }
+
+        // static method used by others controllers in order to add activities based on their methods' requirements. 
+        // For instance, when you send a close request to an issue, an activity should be added in order to show who and when did that.
+        public async void AddActivityAsync(Issue issue,
+                                        string userId,
+                                        string message,
+                                        int? statusId,
+                                        bool updatedStatus = false)
+        {
+
+            var newActivity = new Activity
+            {
+                DateCreated = DateTime.Now,
+                Description = message,
+                IssueId = issue.Id,
+                UserId = userId,
+                UpdatedStatus = updatedStatus,
+                ReassignedIssue = false,
+                ResolvedIssue = false,
+            };
+
+            newActivity.StatusId = updatedStatus ? statusId.Value : issue.StatusId;
+
+
+            await _context.Activities.AddAsync(newActivity);
         }
 
     }

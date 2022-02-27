@@ -1,6 +1,4 @@
-﻿using BugTracker.Models.viewModels;
-
-namespace BugTracker.Controllers.ApiControllers
+﻿namespace BugTracker.Controllers.ApiControllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -58,8 +56,16 @@ namespace BugTracker.Controllers.ApiControllers
             {
                 return NotFound();
             }
-
+            // set its status to closed
             issue.StatusId = Status.Closed;
+
+            //get the usser that sent the request.
+            var user = await _context.Users.SingleAsync(u => u.UserName == HttpContext.User.Identity.Name);
+
+            // Post an activity in the issue. 
+            PostActivity(issue, user.Id, "", Status.Closed, true);
+
+            //save changes
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Index", "Issues");
@@ -83,21 +89,23 @@ namespace BugTracker.Controllers.ApiControllers
             var user = await _context.Users.SingleAsync(u => u.UserName == HttpContext.User.Identity.Name);
 
             // post an activity with the message as the description, getting user, and setting the message to "xxxx changed the priority to xxx"
-            var activity = new Activity
-            {
-                DateCreated = DateTime.Now,
-                Description = model.Description,
-                IssueId = id,
-                UserId = user.Id,
-                UpdatedStatus = false,
-                ReassignedIssue = false,
-                ResolvedIssue = false,
-            };
-            await _context.Activities.AddAsync(activity);
+            PostActivity(issue, user.Id, model.Description, issue.StatusId);
+
             await _context.SaveChangesAsync();
 
             // return to the index of issues
-            return Ok(activity);
+            return Ok(issue);
+        }
+
+        public void PostActivity(Issue issue,
+                                        string userId,
+                                        string message,
+                                        int? statusId,
+                                        bool updatedStatus = false)
+        {
+            var activitiesController = new ActivitiesController(_context);
+
+            activitiesController.AddActivityAsync(issue, userId, message, statusId, updatedStatus);
         }
     }
 }

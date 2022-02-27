@@ -305,7 +305,8 @@
                             position: "center",
                         },
                     }).showToast();
-                } else if (confirm("Are you sure you want to close this issue?")) {
+                }
+                else if (confirm("Are you sure you want to close this issue?")) {
                     status.text("Closed");
                     $.ajax({
                         url: "api/issues/" + $(this).attr("data-issue-id"),

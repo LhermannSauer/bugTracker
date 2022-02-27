@@ -10646,11 +10646,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Projects\\Bug Tracker\\bugtracker\\BugTracker.csproj",
+      "projectUniqueName": "C:\\Projects\\Bug Tracker\\BugTracker\\BugTracker.csproj",
       "projectName": "BugTracker",
-      "projectPath": "C:\\Projects\\Bug Tracker\\bugtracker\\BugTracker.csproj",
+      "projectPath": "C:\\Projects\\Bug Tracker\\BugTracker\\BugTracker.csproj",
       "packagesPath": "C:\\Users\\Leandro\\.nuget\\packages\\",
-      "outputPath": "C:\\Projects\\Bug Tracker\\bugtracker\\obj\\",
+      "outputPath": "C:\\Projects\\Bug Tracker\\BugTracker\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
