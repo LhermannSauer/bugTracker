@@ -51,13 +51,14 @@
                 }
 
                 // set the new name
-                IdentityResult result = await roleManager.SetRoleNameAsync(role, viewModel.Name);
+                await roleManager.SetRoleNameAsync(role, viewModel.Name);
                 // this has to be updated, may be the equivalent to _context.saveChanges()
-                await roleManager.UpdateAsync(role);
-                if (result.Succeeded)
+                IdentityResult _result = await roleManager.UpdateAsync(role);
+
+                if (_result.Succeeded)
                     return RedirectToAction("Index");
                 else
-                    Errors(result);
+                    Errors(_result);
             }
 
             // Here it is a new Role.
