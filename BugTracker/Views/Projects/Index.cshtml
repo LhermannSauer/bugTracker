@@ -1,0 +1,48 @@
+﻿@model IEnumerable<BugTracker.Models.viewModels.ProjectViewModel>
+
+@{
+    ViewData["Title"] = "Projects";
+}
+
+<h1>Projects</h1>
+
+<p>
+    <a asp-action="Edit">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>Critical Issues</th>
+            <th>Overdue Issues</th>
+            <th>Total Issues</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @item.Issues.Where(i => i.PriorityId == 1).Count()
+                </td>
+                <td>
+                    3
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Issues.Count)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

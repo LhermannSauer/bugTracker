@@ -141,7 +141,7 @@
                                 render += '<div class="d-flex gap-2 w-100">'
 
                             if (canEditIssues){
-                                render += `<a href="issues/edit/` +issue.id +`" class=" btn  btn-sm btn-secondary">Edit</a>`
+                                render += `<a  href="issues/edit/` +issue.id +`" class=" btn btn-sm btn-secondary edit-button">Edit</a>`
                             }
                             if (canCloseIssues){
                                 render += `<button data-issue-id="` + issue.id +`" class="btn btn-sm btn-danger js-close">Close</button>`
@@ -166,6 +166,8 @@
                     $(row).find(":eq(5)").attr("issueId", data.id)
                 },
                 initComplete: function (){
+
+                    // hide the action columns if the user cannot perform any action on any issue
                     let actionHeader = $("#actions")
                     let actionColumn = $("tbody td:nth-child(7)")
                     let actionNumber = $("tbody")
@@ -180,6 +182,8 @@
                         actionHeader.toggle()
                     }
 
+
+                    // hide resolved and checked based on the status of the filter
                     if(hideResolved.is(":checked"))
                         hideRow("statusCell","Resolved")
 

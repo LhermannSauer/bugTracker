@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "MOsECRb92cYLFAkUKcDcDSZdZM5/t4S5gxj1meOWnBqn5H87mS94ADUvpQylkVzYf1hqwGPCLeKbokJYJJLsEQ==",
+  "dgSpecHash": "u7U8tJrqlklTON+O2PUody6UHyFJLx2G6w/lXzUyLuRYyBCuTYIKRUrlqe3qj+faeeTUVAqipU6kVWSVMWor3w==",
   "success": true,
-  "projectFilePath": "C:\\Projects\\Bug Tracker\\bugtracker\\BugTracker.csproj",
+  "projectFilePath": "C:\\Projects\\Bug Tracker\\BugTracker\\BugTracker.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Leandro\\.nuget\\packages\\blazortoastify\\1.0.1\\blazortoastify.1.0.1.nupkg.sha512",
     "C:\\Users\\Leandro\\.nuget\\packages\\bootstrap\\5.1.3\\bootstrap.5.1.3.nupkg.sha512",
