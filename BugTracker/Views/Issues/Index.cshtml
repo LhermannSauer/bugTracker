@@ -57,6 +57,11 @@
         let hideResolved = $("#hide-resolved");
         let hideClosed = $("#hide-closed");
 
+        const options = { month: 'short', day: '2-digit',
+                hour: '2-digit', minute: '2-digit', hour12:false };
+        const dateFormatted = new Intl.DateTimeFormat('en-US', options).format;
+
+
         // welcome
             Toastify({
                 text: "Welcome!",
@@ -108,7 +113,7 @@
                         data: "createdDate",
                         render: (data) => {
                             let date = new Date(data);
-                            return date.toLocaleString();
+                            return dateFormatted(date);
                         },
                     },
                     {
@@ -117,11 +122,17 @@
                             if (data == null) return "Not worked.";
 
                             let date = new Date(data);
-                            return date.toLocaleString();
+                            return dateFormatted(date);
                         },
                     },
                     {
                         data: "resolvedDate",
+                        render: (data) => {
+                            if (data == null) return "";
+
+                            let date = new Date(data);
+                            return dateFormatted(date);
+                        },
                     },
                     {
                         data: "id",
@@ -144,13 +155,13 @@
                                 render += `<a  href="issues/edit/` +issue.id +`" class=" btn btn-sm btn-secondary edit-button">Edit</a>`
                             }
                             if (canCloseIssues){
-                                render += `<button data-issue-id="` + issue.id +`" class="btn btn-sm btn-danger js-close">Close</button>`
+                                render += `<button data-issue-id="` + issue.id +`" class="btn btn-sm btn-danger js-close close-button">Close</button>`
                             }
                             if(canCloseIssues || canEditIssues)
                                 render += `</div>`
                             if (canPrioritizeIssues){
                                 render += `<div class="d-block mt-2  ">
-                                                <button  issueId=` + issue.id +` type="button" class="btn btn-sm btn-danger btn-rounded w-100 js-prioritize"  data-bs-toggle="modal" data-bs-target="#prioritizeFormModal">
+                                                <button  issueId=` + issue.id +` type="button" class="btn btn-sm btn-danger btn-rounded w-100 js-prioritize prioritize-button"  data-bs-toggle="modal" data-bs-target="#prioritizeFormModal">
                                                     Prioritize
                                                 </button>
                                             </div>`
@@ -165,7 +176,12 @@
                     $(row).find(":eq(4)").addClass("statusCell")
                     $(row).find(":eq(5)").attr("issueId", data.id)
                 },
-                initComplete: function (){
+                drawCallback: function (){
+                    // get reference of list of buttons
+                    let editButtons = $(".edit-button")
+                    let closeButtons = $(".close-button")
+                    let prioritizeButtons = $(".prioritize-button")
+
 
                     // hide the action columns if the user cannot perform any action on any issue
                     let actionHeader = $("#actions")
@@ -176,12 +192,10 @@
                                                  return $(elem).children().last().is(":empty")})
                                             .length
 
-
                     if (actionNumber > 0){
                         actionColumn.toggle()
                         actionHeader.toggle()
                     }
-
 
                     // hide resolved and checked based on the status of the filter
                     if(hideResolved.is(":checked"))
@@ -189,6 +203,25 @@
 
                     if(hideClosed.is(":checked"))
                         hideRow("statusCell","Closed")
+
+                    // cycle through issues and disable buttons
+                    let issues = $("tbody tr")
+                    for (let i = 0; i< issues.length; i++){
+                        let issue = $(issues[i])
+                        let status = issue.children(".statusCell").text()
+                        let priority = issue.children(".priorityCell").text()
+                        if (status === "Resolved" || status === "Closed"){
+                            $(closeButtons[i]).hide()
+                            $(prioritizeButtons[i]).hide()
+                            $(editButtons[i]).hide()
+                        }
+                        if(priority === "Critical"){
+                            $(prioritizeButtons[i]).hide()
+                        }
+
+                    }
+
+
                 }
             });
 
@@ -304,7 +337,9 @@
 
         // CLOSE ISSUE
             $("#issuesTable").on("click", ".js-close", function () {
+                let prioritizebutton = $(this)
                 let status = $(this).parent().parent().siblings().first().next().next();
+
                 if (status.text() == "Closed") {
                     Toastify({
                         text: "This issue is already closed!",
@@ -326,11 +361,16 @@
                         url: "api/issues/" + $(this).attr("data-issue-id"),
                         method: "DELETE",
                         success: () => {
+                            prioritizebutton.toggle()
                         },
                         error: () => { },
                     });
                 }
             });
+
+        // disable buttons based on status.
+
+
 
         // helpers
             function hideRow(childrenClass, filter){
