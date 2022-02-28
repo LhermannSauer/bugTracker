@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Projects\\Bug Tracker\\BugTracker\\BugTracker.csproj": {}
+    "C:\\Projects\\Bug Tracker\\bugtracker\\BugTracker.csproj": {}
   },
   "projects": {
-    "C:\\Projects\\Bug Tracker\\BugTracker\\BugTracker.csproj": {
+    "C:\\Projects\\Bug Tracker\\bugtracker\\BugTracker.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Projects\\Bug Tracker\\BugTracker\\BugTracker.csproj",
+        "projectUniqueName": "C:\\Projects\\Bug Tracker\\bugtracker\\BugTracker.csproj",
         "projectName": "BugTracker",
-        "projectPath": "C:\\Projects\\Bug Tracker\\BugTracker\\BugTracker.csproj",
+        "projectPath": "C:\\Projects\\Bug Tracker\\bugtracker\\BugTracker.csproj",
         "packagesPath": "C:\\Users\\Leandro\\.nuget\\packages\\",
-        "outputPath": "C:\\Projects\\Bug Tracker\\BugTracker\\obj\\",
+        "outputPath": "C:\\Projects\\Bug Tracker\\bugtracker\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -12,13 +12,18 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
+            <th rowspan=2>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th>Critical Issues</th>
-            <th>Overdue Issues</th>
-            <th>Total Issues</th>
-            <th></th>
+            <th colspan=4> Issues</th>
+            <th rowspan=2>Manager</th>
+            <th rowspan=2>Actions</th>
+        </tr>
+        <tr>
+            <th>Critical </th>
+            <th>Overdue </th>
+            <th>Open </th>
+            <th>Resolved </th>
         </tr>
     </thead>
     <tbody>
@@ -29,13 +34,19 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @item.Issues.Where(i => i.PriorityId == 1).Count()
+                    @item.Issues.Where(i => i.PriorityId == Priority.Critical).Count()
                 </td>
                 <td>
-                    3
+                    @item.Issues.Where(i => (i.CreatedDate - DateTime.Now).Value.Hours >= i.Priority.ResolveWithin).Count()
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Issues.Count)
+                    @item.Issues.Where(i => i.StatusId != Status.Resolved).Count()
+                </td>
+                <td>
+                    @item.Issues.Where(i => i.StatusId== Status.Resolved).Count()
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Manager.UserName)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

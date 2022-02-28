@@ -24,7 +24,7 @@ namespace BugTracker.Controllers
                     Id = project.Id,
                     Name = project.Name,
                     Manager = project.Manager,
-                    Issues = await _context.Issues.Where(i => i.ProjectId == project.Id).ToListAsync(),
+                    Issues = await _context.Issues.Include(i => i.Priority).Where(i => i.ProjectId == project.Id).ToListAsync(),
                 };
                 projectViewModelList.Add(projectViewModel);
             }

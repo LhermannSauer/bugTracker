@@ -45,6 +45,5 @@ namespace BugTracker.Models
         [Display(Name = "Resolved")]
         public DateTime? ResolvedDate { get; set; }
 
-        // To implement: NotifyUsers
     }
 }
