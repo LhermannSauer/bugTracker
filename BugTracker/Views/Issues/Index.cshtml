@@ -14,10 +14,8 @@
 @*TABLE*@
 <div class="container mt-5">
     <div class="">
-        <input id="hide-closed" name="hide-closed" type="checkbox" class="form-checkbox" />
-        <label for="hide-closed">Hide closed</label>
-        <input id="hide-resolved" name="hide-resolved" type="checkbox" value="" class="form-checkbox" />
-        <label for="hide-resolved">Hide resolved</label>
+        <input id="hide-resolved-closed" name="hide-resolved" type="checkbox" value="" class="form-checkbox" />
+        <label for="hide-resolved-closed">Hide Resolved/Closed</label>
     </div>
 
     <table id="issuesTable" class="table table-sm table-responsive table-hover align-middle">
@@ -54,8 +52,7 @@
     $(document).ready(function () {
 
         // VARIABLES
-        let hideResolved = $("#hide-resolved");
-        let hideClosed = $("#hide-closed");
+        let hideClosedAndResolved = $("#hide-resolved-closed");
 
         const options = { month: 'short', day: '2-digit',
                 hour: '2-digit', minute: '2-digit', hour12:false };
@@ -76,154 +73,151 @@
             }).showToast();
 
         // data table
-            $("#issuesTable").DataTable({
-                ajax: {
-                    url: "/api/issues",
-                    dataSrc: "", // object that contains the data, empty if not nested
-                },
-                columns: [
-                    {
-                        data: "id",
-                        render: function (data, type, issue) {
-                                return type === "display" || type === "filter" ?
-                                "<a href='/issues/details/" + issue.id +"' >BT-" +data +"</a>" :
-                                data;
-                        },
+            var table = $("#issuesTable").DataTable({
+                            ajax: {
+                                url: "/api/issues",
+                                dataSrc: "", // object that contains the data, empty if not nested
+                            },
+                            columns: [
+                                {
+                                    data: "id",
+                                    render: function (data, type, issue) {
+                                            return type === "display" || type === "filter" ?
+                                            "<a href='/issues/details/" + issue.id +"' >BT-" +data +"</a>" :
+                                            data;
+                                    },
 
-                    },
-                    {
-                        data: "title",
-                        render: function (data, type, issue) {
-                            return (
-                                "<a href='/issues/details/" + issue.id + "' >" + data + "</a>"
-                            );
-                        },
-                    },
-                    {
-                        data: "status.name",
+                                },
+                                {
+                                    data: "title",
+                                    render: function (data, type, issue) {
+                                        return (
+                                            "<a href='/issues/details/" + issue.id + "' >" + data + "</a>"
+                                        );
+                                    },
+                                },
+                                {
+                                    data: "status.name",
 
-                    },
-                    {
-                        data: "priority.name",
-                    },
-                    {
-                        data: "project.name",
-                    },
-                    {
-                        data: "createdDate",
-                        render: (data) => {
-                            let date = new Date(data);
-                            return dateFormatted(date);
-                        },
-                    },
-                    {
-                        data: "updatedDate",
-                        render: (data) => {
-                            if (data == null) return "Not worked.";
+                                },
+                                {
+                                    data: "priority.name",
+                                },
+                                {
+                                    data: "project.name",
+                                },
+                                {
+                                    data: "createdDate",
+                                    render: (data) => {
+                                        let date = new Date(data);
+                                        return dateFormatted(date);
+                                    },
+                                },
+                                {
+                                    data: "updatedDate",
+                                    render: (data) => {
+                                        if (data == null) return "Not worked.";
 
-                            let date = new Date(data);
-                            return dateFormatted(date);
-                        },
-                    },
-                    {
-                        data: "resolvedDate",
-                        render: (data) => {
-                            if (data == null) return "";
+                                        let date = new Date(data);
+                                        return dateFormatted(date);
+                                    },
+                                },
+                                {
+                                    data: "resolvedDate",
+                                    render: (data) => {
+                                        if (data == null) return "";
 
-                            let date = new Date(data);
-                            return dateFormatted(date);
-                        },
-                    },
-                    {
-                        data: "id",
-                        render: function (data, type, issue) {
-                            let canPrioritizeIssues = `@User.IsInRole("CanPrioritizeIssues").ToString()` === "True";
-                            let canCloseIssues = `@User.IsInRole("CanCloseIssues").ToString()` === "True";
-                            let canEditIssues = `@User.IsInRole("CanPrioritizeIssues")` === "True";
+                                        let date = new Date(data);
+                                        return dateFormatted(date);
+                                    },
+                                },
+                                {
+                                    data: "id",
+                                    render: function (data, type, issue) {
+                                        let canPrioritizeIssues = `@User.IsInRole("CanPrioritizeIssues").ToString()` === "True";
+                                        let canCloseIssues = `@User.IsInRole("CanCloseIssues").ToString()` === "True";
+                                        let canEditIssues = `@User.IsInRole("CanPrioritizeIssues")` === "True";
 
-                            let render = "";
+                                        let render = "";
 
-                            //if (!(canPrioritizeIssues || canCloseIssues || canEditIssues))
-                            //    render +=  `<div class="">
-                            //                    <button data-issue-id="` + issue.id +`" class="btn btn-danger js-request-access btn-sm">Request Access</button>
-                            //                </div>`
+                                        //if (!(canPrioritizeIssues || canCloseIssues || canEditIssues))
+                                        //    render +=  `<div class="">
+                                        //                    <button data-issue-id="` + issue.id +`" class="btn btn-danger js-request-access btn-sm">Request Access</button>
+                                        //                </div>`
 
-                            if(canCloseIssues || canEditIssues)
-                                render += '<div class="d-flex gap-2 w-100">'
+                                        if(canCloseIssues || canEditIssues)
+                                            render += '<div class="d-flex gap-2 w-100">'
 
-                            if (canEditIssues){
-                                render += `<a  href="issues/edit/` +issue.id +`" class=" btn btn-sm btn-secondary edit-button">Edit</a>`
+                                        if (canEditIssues){
+                                            render += `<a  href="issues/edit/` +issue.id +`" class=" btn btn-sm btn-secondary edit-button">Edit</a>`
+                                        }
+                                        if (canCloseIssues){
+                                            render += `<button data-issue-id="` + issue.id +`" class="btn btn-sm btn-danger js-close close-button">Close</button>`
+                                        }
+                                        if(canCloseIssues || canEditIssues)
+                                            render += `</div>`
+                                        if (canPrioritizeIssues){
+                                            render += `<div class="d-block mt-2  ">
+                                                            <button  issueId=` + issue.id +` type="button" class="btn btn-sm btn-danger btn-rounded w-100 js-prioritize prioritize-button"  data-bs-toggle="modal" data-bs-target="#prioritizeFormModal">
+                                                                Prioritize
+                                                            </button>
+                                                        </div>`
+                                        }
+
+                                        return render;
+                                    },
+                                },
+                            ],
+                            createdRow: function (row, data, dataIndex) {
+                                $(row).find(":eq(5)").addClass("priorityCell")
+                                $(row).find(":eq(4)").addClass("statusCell")
+                                $(row).find(":eq(5)").attr("issueId", data.id)
+                            },
+                            drawCallback: function (){
+
+
+                                // get reference of list of buttons
+                                let editButtons = $(".edit-button")
+                                let closeButtons = $(".close-button")
+                                let prioritizeButtons = $(".prioritize-button")
+
+
+                                // hide the action columns if the user cannot perform any action on any issue
+                                let actionHeader = $("#actions")
+                                let actionColumn = $("tbody td:nth-child(7)")
+                                let actionNumber = $("tbody")
+                                                        .children("tr")
+                                                        .filter(function(i, elem) {
+                                                             return $(elem).children().last().is(":empty")})
+                                                        .length
+
+                                if (actionNumber > 0){
+                                    actionColumn.toggle()
+                                    actionHeader.toggle()
+                                }
+
+
+
+                                // cycle through issues and disable buttons
+                                let issues = $("tbody tr")
+                                for (let i = 0; i< issues.length; i++){
+                                    let issue = $(issues[i])
+                                    let status = issue.children(".statusCell").text()
+                                    let priority = issue.children(".priorityCell").text()
+                                    if (status === "Resolved" || status === "Closed"){
+                                        $(closeButtons[i]).hide()
+                                        $(prioritizeButtons[i]).hide()
+                                        $(editButtons[i]).hide()
+                                    }
+                                    if(priority === "Critical"){
+                                        $(prioritizeButtons[i]).hide()
+                                    }
+
+                                }
+
+
                             }
-                            if (canCloseIssues){
-                                render += `<button data-issue-id="` + issue.id +`" class="btn btn-sm btn-danger js-close close-button">Close</button>`
-                            }
-                            if(canCloseIssues || canEditIssues)
-                                render += `</div>`
-                            if (canPrioritizeIssues){
-                                render += `<div class="d-block mt-2  ">
-                                                <button  issueId=` + issue.id +` type="button" class="btn btn-sm btn-danger btn-rounded w-100 js-prioritize prioritize-button"  data-bs-toggle="modal" data-bs-target="#prioritizeFormModal">
-                                                    Prioritize
-                                                </button>
-                                            </div>`
-                            }
-
-                            return render;
-                        },
-                    },
-                ],
-                createdRow: function (row, data, dataIndex) {
-                    $(row).find(":eq(5)").addClass("priorityCell")
-                    $(row).find(":eq(4)").addClass("statusCell")
-                    $(row).find(":eq(5)").attr("issueId", data.id)
-                },
-                drawCallback: function (){
-                    // get reference of list of buttons
-                    let editButtons = $(".edit-button")
-                    let closeButtons = $(".close-button")
-                    let prioritizeButtons = $(".prioritize-button")
-
-
-                    // hide the action columns if the user cannot perform any action on any issue
-                    let actionHeader = $("#actions")
-                    let actionColumn = $("tbody td:nth-child(7)")
-                    let actionNumber = $("tbody")
-                                            .children("tr")
-                                            .filter(function(i, elem) {
-                                                 return $(elem).children().last().is(":empty")})
-                                            .length
-
-                    if (actionNumber > 0){
-                        actionColumn.toggle()
-                        actionHeader.toggle()
-                    }
-
-                    // hide resolved and checked based on the status of the filter
-                    if(hideResolved.is(":checked"))
-                        hideRow("statusCell","Resolved")
-
-                    if(hideClosed.is(":checked"))
-                        hideRow("statusCell","Closed")
-
-                    // cycle through issues and disable buttons
-                    let issues = $("tbody tr")
-                    for (let i = 0; i< issues.length; i++){
-                        let issue = $(issues[i])
-                        let status = issue.children(".statusCell").text()
-                        let priority = issue.children(".priorityCell").text()
-                        if (status === "Resolved" || status === "Closed"){
-                            $(closeButtons[i]).hide()
-                            $(prioritizeButtons[i]).hide()
-                            $(editButtons[i]).hide()
-                        }
-                        if(priority === "Critical"){
-                            $(prioritizeButtons[i]).hide()
-                        }
-
-                    }
-
-
-                }
-            });
+                        });
 
 
         // FILTERS
@@ -232,13 +226,13 @@
 
 
             //RESOLVED
-            hideResolved.on("click", () =>{
-                hideRow("statusCell","Resolved")
-            });
-            //Closed
-            hideClosed.on("click", () =>{
-                hideRow("statusCell","Closed")
-            });
+            hideClosedAndResolved.on("click", () =>{
+                if (hideClosedAndResolved.is(":checked"))
+                    table.column(2).search("^((?!Resolved|Closed).)*$", true, false).draw();
+                else
+                    table.column(2).search( "" ).draw()
+            })
+
 
 
         // MODALS
@@ -362,6 +356,8 @@
                         method: "DELETE",
                         success: () => {
                             prioritizebutton.toggle()
+                            table.draw()
+
                         },
                         error: () => { },
                     });
@@ -372,15 +368,7 @@
 
 
 
-        // helpers
-            function hideRow(childrenClass, filter){
 
-                $("tbody tr").each(function () {
-                   if ($(this).children("."+childrenClass).filter((i, elem) => elem.innerText === filter).length > 0){
-                       $(this).toggle();
-                   }
-                })
-            }
     });
 </script>
 }
