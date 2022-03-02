@@ -17,69 +17,37 @@ namespace BugTracker.Controllers
             return View(await _context.Priorities.ToListAsync());
         }
 
-        // GET: Priorities/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var priority = await _context.Priorities
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (priority == null)
-            {
-                return NotFound();
-            }
-
-            return View(priority);
-        }
-
-        // GET: Priorities/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Priorities/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,RespondWithin,ResolveWithin")] Priority priority)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(priority);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(priority);
-        }
-
         // GET: Priorities/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            Priority priority;
             if (id == null)
             {
-                return NotFound();
+                priority = new Priority();
+                return View("PriorityForm", priority);
             }
 
-            var priority = await _context.Priorities.FindAsync(id);
+            priority = await _context.Priorities.FindAsync(id);
             if (priority == null)
             {
                 return NotFound();
             }
-            return View(priority);
+            return View("PriorityForm", priority);
         }
 
-        // POST: Priorities/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,RespondWithin,ResolveWithin")] Priority priority)
+        public async Task<IActionResult> Save(int id, [Bind("Id,Name,RespondWithin,ResolveWithin")] Priority priority)
         {
+            if (id == 0)
+            {
+                await _context.AddAsync(priority);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+
             if (id != priority.Id)
             {
                 return NotFound();
@@ -105,37 +73,9 @@ namespace BugTracker.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(priority);
+            return RedirectToAction("Index");
         }
 
-        // GET: Priorities/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var priority = await _context.Priorities
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (priority == null)
-            {
-                return NotFound();
-            }
-
-            return View(priority);
-        }
-
-        // POST: Priorities/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var priority = await _context.Priorities.FindAsync(id);
-            _context.Priorities.Remove(priority);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
 
         private bool PriorityExists(int id)
         {
