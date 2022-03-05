@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
 
-        public IdentityUser? User { get; set; }
+        public AppUser? User { get; set; }
 
         public string? UserId { get; set; }
 

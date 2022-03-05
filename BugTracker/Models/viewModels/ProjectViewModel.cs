@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public IdentityUser Manager { get; set; }
+        public AppUser Manager { get; set; }
 
         public List<Issue> Issues { get; set; }
     }
