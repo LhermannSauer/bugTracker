@@ -64,9 +64,9 @@ namespace BugTracker.Areas.Identity.Pages.Account.Manage
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            var firstName = user.FirstName;
-            var lastName = user.LastName;
-            var avatarUrl = user.AvatarUrl;
+            FirstName = user.FirstName;
+            LastName = user.LastName;
+            AvatarUrl = user.AvatarUrl;
 
             Username = userName;
 

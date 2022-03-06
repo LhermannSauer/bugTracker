@@ -7,7 +7,7 @@
 
         public string LastName { get; set; } = null!;
 
-        public string AvatarUrl { get; set; } = null!;
+        public string? AvatarUrl { get; set; }
 
 
         public AppUser() : base()
