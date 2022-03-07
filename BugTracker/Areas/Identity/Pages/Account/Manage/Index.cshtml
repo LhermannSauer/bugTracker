@@ -12,11 +12,11 @@
     <div class="col-md-6">
         <form id="profile-form" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-floating">
+            <div class="form-group">
                 <input asp-for="Username" class="form-control" disabled />
                 <label asp-for="Username" class="form-label"></label>
             </div>
-            <div class="form-floating">
+            <div class="form-group">
                 <input asp-for="Input.PhoneNumber" class="form-control" />
                 <label asp-for="Input.PhoneNumber" class="form-label"></label>
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
@@ -26,7 +26,7 @@
     </div>
     <div class="col-md-4">
         <div class="userImageContainer ">
-            <img src=@imageUrl alt="test" class="w-50 h-50 rounded-circle" />
+            <img src=@imageUrl alt="test" class="w-75 h-75 rounded-circle m-auto d-block" />
         </div>
     </div>
 </div>

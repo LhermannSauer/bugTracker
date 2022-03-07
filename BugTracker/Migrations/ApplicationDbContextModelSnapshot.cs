@@ -77,7 +77,6 @@ namespace BugTracker.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("AvatarUrl")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -131,6 +130,9 @@ namespace BugTracker.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
+
+                    b.Property<int>("UserPosition")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

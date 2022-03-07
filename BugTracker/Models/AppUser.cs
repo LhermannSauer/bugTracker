@@ -9,10 +9,23 @@
 
         public string? AvatarUrl { get; set; }
 
+        public Position UserPosition { get; set; }
+
+
 
         public AppUser() : base()
         {
 
         }
+
+        public enum Position
+        {
+            Administrator,
+            Manager,
+            Developer,
+            User,
+        }
+
+
     }
 }

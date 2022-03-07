@@ -1,8 +1,13 @@
-﻿@model Activity
+﻿@model ActivityEntryViewModel
 
 @{
     string timeAgo;
     string activityText;
+    string userLetters = Model.User.FirstName.Substring(0, 1) + Model.User.LastName.Substring(0, 1);
+
+    bool isAdmin = Model.User.UserPosition == AppUser.Position.Administrator;
+    bool isDev = Model.User.UserPosition == AppUser.Position.Developer;
+    bool isCreator = Model.UserId == Model.CreatorId;
 
     TimeSpan span = DateTime.Now - Model.DateCreated.Value;
     // SPANTIME LOGIC
@@ -86,10 +91,38 @@
 }
 
 
+
 <div class="feed-element">
-    <a href="#DETAILS OF THE USER" class="">
-        <img alt="image" class="img-circle rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar6.png">
+    <a href="#DETAILS OF THE USER" class="user-link">
+        @{
+            if (Model.User.AvatarUrl != "")
+            {
+                <img alt="image" class="img-circle rounded-circle" src="~/uploads/@Model.User.AvatarUrl">
+            }
+            else
+            {
+                <div class="letterCircle">@userLetters</div>
+            }
+
+        }
+        @{
+            if (isAdmin)
+            {
+                <span class='badge badge-pill badge-admin'>Admin</span>
+            }
+            else if (isDev)
+            {
+                <span class='badge badge-pill badge-dev'>Developer</span>
+
+            }
+            else if (isCreator)
+            {
+                <span class='badge badge-pill badge-creator'>Creator</span>
+
+            }
+        }
     </a>
+
     <div class="media-body ">
         <small class="pull-right">@timeAgo</small><br />
         <strong>@Model.User.UserName</strong>@activityText<br>
@@ -97,7 +130,7 @@
         @{
             if (!Model.IsAutomaticallyGenerated.Value)
             {
-                <div class="well">
+                <div class="activity-description">
                     @Model.Description
                 </div>
             }
