@@ -3,12 +3,30 @@
     public class RolesController : Controller
     {
         private RoleManager<IdentityRole> roleManager;
-        public RolesController(RoleManager<IdentityRole> roleMgr)
+        private UserManager<AppUser> userManager;
+        public RolesController(RoleManager<IdentityRole> roleMgr, UserManager<AppUser> userMgr)
         {
             roleManager = roleMgr;
+            userManager = userMgr;
         }
 
-        public ViewResult Index() => View(roleManager.Roles);
+        public async Task<IActionResult> Index()
+        {
+            var users = await userManager.Users.ToListAsync();
+            var viewModel = new RoleIndexViewModel
+            {
+                Roles = await roleManager.Roles.ToListAsync(),
+                Users = new SelectList(users, "Id", "UserName"),
+                AssignToId = ""
+            };
+
+
+            return View(viewModel);
+
+        }
+
+
+
 
         private void Errors(IdentityResult result)
         {
@@ -90,5 +108,16 @@
                 ModelState.AddModelError("", "No role found");
             return View("Index", roleManager.Roles);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Assign(string roleName, string userId)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+            await userManager.AddToRoleAsync(user, roleName);
+
+            return RedirectToAction("Index");
+        }
+
+
     }
 }

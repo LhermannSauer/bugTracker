@@ -5,8 +5,8 @@
   </PropertyGroup>
   <PropertyGroup>
     <ActiveDebugProfile>BugTracker</ActiveDebugProfile>
-    <_SelectedScaffolderID>ApiControllerWithContextScaffolder</_SelectedScaffolderID>
-    <_SelectedScaffolderCategoryPath>root/Common</_SelectedScaffolderCategoryPath>
+    <_SelectedScaffolderID>MvcControllerWithContextScaffolder</_SelectedScaffolderID>
+    <_SelectedScaffolderCategoryPath>root/Common/MVC/Controller</_SelectedScaffolderCategoryPath>
     <WebStackScaffolding_ControllerDialogWidth>650</WebStackScaffolding_ControllerDialogWidth>
     <WebStackScaffolding_IsLayoutPageSelected>True</WebStackScaffolding_IsLayoutPageSelected>
     <WebStackScaffolding_IsPartialViewSelected>True</WebStackScaffolding_IsPartialViewSelected>

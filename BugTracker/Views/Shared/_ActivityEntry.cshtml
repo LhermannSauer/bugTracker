@@ -8,7 +8,7 @@
     bool isAdmin = Model.User.UserPosition == AppUser.Position.Administrator;
     bool isDev = Model.User.UserPosition == AppUser.Position.Developer;
     bool isCreator = Model.UserId == Model.CreatorId;
-
+    
     TimeSpan span = DateTime.Now - Model.DateCreated.Value;
     // SPANTIME LOGIC
     if (span.Days > 365)
