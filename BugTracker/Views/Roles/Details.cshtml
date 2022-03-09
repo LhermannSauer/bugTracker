@@ -1,0 +1,102 @@
+﻿@model RoleDetailsViewModel
+
+<div class="mt-3">
+    <h1>Details</h1>
+    <br />
+    <h2>Role: @Model.Role.Name</h2>
+    <hr />
+
+    <div class="container mt-5 mt-sm-2">
+        <div class="row">
+            <div class="col-md-5">
+                <h3>Active users</h3>
+                @{
+                    if (Model.UsersInRole == null)
+                    {
+                        <p>There are no users in this role.</p>
+                    }
+                    else
+                    {
+                        @Html.DropDownListFor(m => Model.UsersToRemove, Model.UsersInRole, null, new {multiple = "multiple", @class="form-select unassign-users" })
+                    }
+
+                }
+            </div>
+            <div class="col-md-1 d-grid buttons-grid pt-5 ">
+                <i class="fa-solid fa-chevron-left js-assign"></i>
+                <i class="fa-solid fa-chevron-right js-unassign"></i>
+            </div>
+            <div class="col-md-5">
+                <h3>Add  users</h3>
+                @{
+                    if (Model.UsersNotInRole == null)
+                    {
+                        <p>All Users have this role.</p>
+                    }
+                    else
+                    {
+                        @Html.DropDownListFor(m => Model.UsersToAdd, Model.UsersNotInRole, null, new {multiple = "multiple",  @class="form-select assign-users" })
+                    }
+
+                }
+            </div>
+        </div>
+    </div>
+    @Html.HiddenFor(m => m.Role.Name)
+
+</div>
+
+@section scripts{
+<script>
+    $(document).ready(function(){
+
+        $(".js-assign").on("click", function (){
+            let users = $(".assign-users").val();
+            let roleName = $("#Role_Name").val();
+            $.ajax({
+                url: "/api/roles/assignList",
+                method: "POST",
+                contentType:"application/json",
+                data: JSON.stringify({
+                    UsersToAdd: users,
+                    RoleName: roleName
+                }),
+                success: () =>{
+                    alert("OK!")
+                },
+                error: () =>{
+                    alert("ERROR!")
+                }
+            })
+        })
+
+        $(".js-unassign").on("click", function (){
+            let users = $(".unassign-users").val();
+            let roleName = $("#Role_Name").val();
+            $.ajax({
+                url: "/api/roles/unassignList",
+                method: "POST",
+                contentType:"application/json",
+                data: JSON.stringify({
+                    UsersToAdd: users, // USERS TO REMOVE
+                    RoleName: roleName
+                }),
+                success: () =>{
+                    alert("OK!")
+                },
+                error: () =>{
+                    alert("ERROR!")
+                }
+            })
+        })
+
+
+
+
+
+    })
+
+
+
+</script>
+}

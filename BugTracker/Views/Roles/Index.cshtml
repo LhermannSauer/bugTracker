@@ -14,7 +14,7 @@
     @foreach (var role in Model.Roles)
     {
         <tr>
-            <td>@role.Id</td>
+            <td><a asp-action="Details" asp-route-id="@role.Id">@role.Id</a></td>
             <td>@role.Name</td>
             <td class="user-select-cell">@Html.DropDownListFor(m => Model.AssignToId, Model.Users, "Select User", new {@class="form-select-sm user-select"})</td>
             <td><button roleName=@role.Name class="btn btn-sm btn-info js-assign">Assign</button></td>

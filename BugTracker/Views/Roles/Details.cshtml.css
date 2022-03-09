@@ -1,0 +1,44 @@
+﻿@keyframes arrowLeft {
+    0% {
+        transform: translate(0,0),
+    }
+
+    50% {
+        transform: translate(-5rem,0),
+    }
+
+    100% {
+        transform: translate(0,0),
+    }
+}
+
+.buttons-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+    font-size: 2rem;
+}
+
+    .buttons-grid i {
+        display: block;
+        color: #55E;
+        padding: 2px;
+        border: 2px solid #4440;
+        border-radius: 5px;
+        width: 2.2rem;
+        height: 2.2rem;
+        text-align: center;
+        line-height: 1.65rem;
+        transition: all 0.5s ease-out
+    }
+
+.js-assign:hover {
+    border: 2px solid #449;
+    transform: translate(-0.2em,0);
+}
+
+.js-unassign:hover {
+    border: 2px solid #449;
+    transform: translate(0.2em,0);
+}

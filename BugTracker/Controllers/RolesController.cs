@@ -26,8 +26,6 @@
         }
 
 
-
-
         private void Errors(IdentityResult result)
         {
             foreach (IdentityError error in result.Errors)
@@ -117,6 +115,43 @@
 
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(string? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var role = await roleManager.FindByIdAsync(id);
+            if (role == null)
+            {
+                return NotFound();
+            }
+
+            var users = await userManager.Users.ToListAsync();
+            var usersInRole = await userManager.GetUsersInRoleAsync(role.Name);
+            var usersNotInRole = (usersInRole.Count > 0)
+                                        ? users.Where(u => !usersInRole.Contains(u)).ToList()
+                                        : users;
+
+            var viewModel = new RoleDetailsViewModel
+            {
+                Role = role,
+                UsersInRole = (usersInRole.Count() > 0)
+                                    ? new SelectList(usersInRole, "Id", "UserName")
+                                    : null,
+                UsersNotInRole = (usersNotInRole.Count() > 0)
+                                    ? new SelectList(usersNotInRole, "Id", "UserName")
+                                    : null
+            };
+
+            return View(viewModel);
+        }
+
+
+
 
 
     }
