@@ -13,11 +13,12 @@
                 @{
                     if (Model.UsersInRole == null)
                     {
-                        <p>There are no users in this role.</p>
+                        <select class="form-select unassign-users" id="UsersToRemove" multiple="multiple" name="UsersToRemove" size=5>
+                        </select>
                     }
                     else
                     {
-                        @Html.DropDownListFor(m => Model.UsersToRemove, Model.UsersInRole, null, new {multiple = "multiple", @class="form-select unassign-users" })
+                        @Html.DropDownListFor(m => Model.UsersToRemove, Model.UsersInRole, null, new {multiple = "multiple", @class="form-select unassign-users", size=5 })
                     }
 
                 }
@@ -31,11 +32,12 @@
                 @{
                     if (Model.UsersNotInRole == null)
                     {
-                        <p>All Users have this role.</p>
+                        <select class="form-select assign-users" id="UsersToAdd" multiple="multiple" name="UsersToAdd" size=5>
+                        </select>
                     }
                     else
                     {
-                        @Html.DropDownListFor(m => Model.UsersToAdd, Model.UsersNotInRole, null, new {multiple = "multiple",  @class="form-select assign-users" })
+                        @Html.DropDownListFor(m => Model.UsersToAdd, Model.UsersNotInRole, null, new {multiple = "multiple",  @class="form-select assign-users", size=5 })
                     }
 
                 }
@@ -48,11 +50,14 @@
 
 @section scripts{
 <script>
+
     $(document).ready(function(){
+        let roleName = $("#Role_Name").val();
 
         $(".js-assign").on("click", function (){
+            // get the value of the multiple select users
             let users = $(".assign-users").val();
-            let roleName = $("#Role_Name").val();
+
             $.ajax({
                 url: "/api/roles/assignList",
                 method: "POST",
@@ -62,17 +67,20 @@
                     RoleName: roleName
                 }),
                 success: () =>{
-                    alert("OK!")
+                    let options = $(".assign-users").find(":selected")
+                    options.each( (index, elem) => {
+                        $(elem).appendTo(".unassign-users")
+                    })
+                    successToast("Roles Assigned!")
                 },
                 error: () =>{
-                    alert("ERROR!")
+                    errorToast()
                 }
             })
         })
 
         $(".js-unassign").on("click", function (){
             let users = $(".unassign-users").val();
-            let roleName = $("#Role_Name").val();
             $.ajax({
                 url: "/api/roles/unassignList",
                 method: "POST",
@@ -82,10 +90,15 @@
                     RoleName: roleName
                 }),
                 success: () =>{
-                    alert("OK!")
+                    let options = $(".unassign-users").find(":selected")
+                    options.each( (index, elem) => {
+                        $(elem).appendTo(".assign-users")
+                    })
+                    successToast()
+
                 },
                 error: () =>{
-                    alert("ERROR!")
+                    errorToast()
                 }
             })
         })
