@@ -21,10 +21,14 @@ namespace BugTracker.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
 
-
+            base.OnModelCreating(builder);
             new IssuesConfiguration().Configure(builder.Entity<Issue>());
 
-            base.OnModelCreating(builder);
+
+
+            builder.Entity<AppUser>()
+                .HasMany(u => u.IssuesCreated)
+                .WithOne(i => i.Creator);
 
         }
 

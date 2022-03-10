@@ -24,6 +24,7 @@
                             .Include(i => i.Status)
                             .Include(i => i.Priority)
                             .Include(i => i.Project)
+                            .Include(i => i.Creator)
                             .ToListAsync();
 
             if (issues == null)
@@ -42,6 +43,7 @@
 
             var issue = await _context.Issues
                 .Include(i => i.Project)
+                .Include(i => i.Participants)
                 .Include(i => i.Creator)
                 .Include(i => i.Area)
                 .Include(i => i.Priority)

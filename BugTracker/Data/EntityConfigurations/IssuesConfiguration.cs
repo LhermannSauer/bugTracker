@@ -21,6 +21,10 @@ namespace BugTracker.Data.ModelConfigurations
             builder.Property(i => i.PriorityId).IsRequired();
 
             // relationships
+
+            builder.HasMany(i => i.Participants)
+                .WithMany(p => p.IssuesAsParticipant)
+                .UsingEntity<IssueParticipant>();
         }
     }
 }

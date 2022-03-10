@@ -30,6 +30,7 @@ namespace BugTracker.Models
 
         public AppUser? Creator { get; set; }
 
+
         public string? CreatorId { get; set; }
 
         public Developer? AssignedTo { get; set; }
@@ -45,5 +46,6 @@ namespace BugTracker.Models
         [Display(Name = "Resolved")]
         public DateTime? ResolvedDate { get; set; }
 
+        public IEnumerable<AppUser>? Participants { get; set; }
     }
 }

@@ -11,7 +11,9 @@
 
         public Position UserPosition { get; set; }
 
+        public IEnumerable<Issue> IssuesAsParticipant { get; set; }
 
+        public IEnumerable<Issue> IssuesCreated { get; set; }
 
         public AppUser() : base()
         {
