@@ -83,12 +83,13 @@
             if (!ModelState.IsValid)
                 return BadRequest();
 
+            // get data of the user that submitted the form.
             var userName = HttpContext.User.Identity.Name;
             var user = _context.Users.Single(u => u.UserName == userName);
+
             // If id is 0, then it is a new issue
             if (issueForm.Id == 0)
             {
-                // get data of the user that submitted the form.
 
                 // Create the new object
                 var issue = new Issue()
@@ -104,9 +105,18 @@
                 };
 
 
-
                 // add it to the db
-                await _context.Issues.AddAsync(issue);
+                var issueInDb = await _context.Issues.AddAsync(issue);
+
+                // add the creator as a participant
+                await _context.IssueParticipants.AddAsync(new IssueParticipant
+                {
+                    IssueId = issueInDb.Entity.Id,
+                    ParticipantsId = user.Id
+                });
+
+
+
                 await _context.SaveChangesAsync();
 
                 PostActivity(issue, user.Id, "Created the Issue", Status.Open);

@@ -17,6 +17,7 @@ namespace BugTracker.Data
         public DbSet<Priority>? Priorities { get; set; }
         public DbSet<Status>? Statuses { get; set; }
         public DbSet<Project>? Projects { get; set; }
+        public DbSet<IssueParticipant>? IssueParticipants { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -251,7 +251,7 @@ namespace BugTracker.Migrations
 
                     b.HasIndex("ParticipantsId");
 
-                    b.ToTable("IssueParticipant");
+                    b.ToTable("IssueParticipants");
                 });
 
             modelBuilder.Entity("BugTracker.Models.Priority", b =>
