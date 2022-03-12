@@ -96,9 +96,7 @@
                                             <div class="feed-activity-list">
                                                 @foreach (var activity in Model.Activities.Reverse())
                                                 {
-                                                    var viewModel = new ActivityEntryViewModel(activity);
-                                                    viewModel.CreatorId = Model.CreatorId;
-                                                    <partial name="_ActivityEntry" model="viewModel"></partial>
+                                                    <partial name="_ActivityEntry" model="activity"></partial>
                                                 }
                                             </div>
                                         </div>

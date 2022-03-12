@@ -4,10 +4,12 @@
     public class IssuesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public IssuesController(ApplicationDbContext context)
+        public IssuesController(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         protected override void Dispose(bool disposing)
@@ -55,7 +57,12 @@
                 return NotFound();
             }
 
-            issue.Activities = _context.Activities.Include(a => a.User).Include(a => a.Status).Include(a => a.ReassignedTo.User).Where(a => a.IssueId == issue.Id).ToList();
+            issue.Activities = await _context.Activities.Include(a => a.Issue)
+                                                .Include(a => a.User)
+                                                .Include(a => a.Status)
+                                                .Include(a => a.ReassignedTo.User)
+                                                .Where(a => a.IssueId == issue.Id)
+                                                .ToListAsync();
 
 
             return View(issue);
@@ -80,6 +87,7 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Save(IssuesFormViewModel issueForm)
         {
+            Issue issueInDb;
             if (!ModelState.IsValid)
                 return BadRequest();
 
@@ -91,56 +99,45 @@
             if (issueForm.Id == 0)
             {
 
-                // Create the new object
-                var issue = new Issue()
-                {
-                    Title = issueForm.Title,
-                    Description = issueForm.Description,
-                    PriorityId = issueForm.PriorityId,
-                    AreaId = issueForm.AreaId,
-                    ProjectId = issueForm.ProjectId,
-                    StatusId = Status.Open,
-                    CreatedDate = DateTime.Now,
-                    CreatorId = user.Id,
-                };
+                //Map issueviewmodel to a new issue 
+                var issue2 = _mapper.Map<Issue>(issueForm);
+                issue2.CreatedDate = DateTime.Now;
+                issue2.CreatorId = user.Id;
+                issue2.StatusId = Status.Open;
 
 
-                // add it to the db
-                var issueInDb = await _context.Issues.AddAsync(issue);
+                // add it to the db, get reference for new id
+                var entityEntry = await _context.Issues.AddAsync(issue2);
+                issueInDb = entityEntry.Entity;
+
+                await _context.SaveChangesAsync();
 
                 // add the creator as a participant
                 await _context.IssueParticipants.AddAsync(new IssueParticipant
                 {
-                    IssueId = issueInDb.Entity.Id,
+                    IssueId = issueInDb.Id,
                     ParticipantsId = user.Id
                 });
 
-
-
-                await _context.SaveChangesAsync();
-
-                PostActivity(issue, user.Id, "Created the Issue", Status.Open);
+                PostActivity(issue2, user.Id, "Created the Issue", Status.Open);
             }
             else // The id already exists in db
             {
                 //Get the db object
-                var issueInDb = await _context.Issues.SingleAsync(i => i.Id == issueForm.Id);
+                issueInDb = await _context.Issues.SingleAsync(i => i.Id == issueForm.Id);
 
-                //update fields
-                issueInDb.Title = issueForm.Title;
-                issueInDb.Description = issueForm.Description;
-                issueInDb.PriorityId = issueForm.PriorityId;
-                issueInDb.AreaId = issueForm.AreaId;
-                issueInDb.ProjectId = issueForm.ProjectId;
-                // Set updated date to now
+                // map for to issue in db
+                issueInDb = _mapper.Map<Issue>(issueForm);
+                // set the updated date to now
                 issueInDb.UpdatedDate = DateTime.Now;
-                ;
+
+                // Post an automatic activity indicating that the issue has been edited.
                 PostActivity(issueInDb, user.Id, "Issue Edited", Status.Open);
             }
             await _context.SaveChangesAsync();
 
 
-            return RedirectToAction("Index", "Issues");
+            return RedirectToAction("Details", issueInDb.Id);
         }
 
         public async Task<IActionResult> Edit(int? id)

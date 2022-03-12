@@ -19,6 +19,18 @@ builder.Services.AddAuthorization(opt =>
         .Build();
 });
 
+// AUTOMAPPER
+var mapperConfiguration = new MapperConfiguration(cfg =>
+{
+    cfg.AddProfile<MappingProfile>();
+});
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+// END AUTOMAPPER
+
+
+
+
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();

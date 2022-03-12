@@ -11,6 +11,8 @@
 
         public int? IssueId { get; set; }
 
+        public Issue? Issue { get; set; }
+
         public AppUser? User { get; set; }
 
         public string? UserId { get; set; }

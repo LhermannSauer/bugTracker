@@ -1,4 +1,5 @@
-﻿global using BugTracker.Data;
+﻿global using AutoMapper;
+global using BugTracker.Data;
 global using BugTracker.Infrastructure;
 global using BugTracker.Models;
 global using BugTracker.Models.viewModels;
@@ -10,9 +11,5 @@ global using Microsoft.AspNetCore.Mvc.Rendering;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using System.ComponentModel.DataAnnotations;
-namespace BugTracker
-{
-    public class GlobalUsing
-    {
-    }
-}
+
+
