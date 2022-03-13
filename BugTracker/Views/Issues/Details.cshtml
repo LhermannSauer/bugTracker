@@ -30,7 +30,7 @@
                             <div class="col-lg-12">
                                 <div class="m-b-md">
                                     @{
-                                        if (User.IsInRole("CanEditIssues"))
+                                        if (User.IsInRole("IsAdmin"))
                                         {
                                             <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary btn-sm pull-right">Edit</a>
                                         }
@@ -78,7 +78,21 @@
                                                 <a href=""><img alt="" class="img-circle" src="/uploads/@participant.AvatarUrl"></a>
                                             }
                                         }
-                                        <button type='button' class="btn btn-primary btn-sm js-add-participant" data-toggle="modal" data-target="#addParticipantModal">Add</button>
+                                        @*ADD PARTICIPANT MODAL *@
+                                    </dd>
+                                    <dd class="add-participants-div">
+                                        <button type='button' class="btn btn-primary btn-sm d-d-inline-block js-add-participant">Add</button>
+
+                                        <div class="add-participants opacity-0 d-inline-block ">
+                                            <form class="add-participants-form form">
+                                                <div class="form-group">
+                                                    <input disabled list="users" type="text" class="form-control-sm" id="add-participant-input" placeholder="Add participant" autocomplete="off" />
+                                                    <datalist class="add-participants-hints" id="users">
+                                                    </datalist>
+                                                </div>
+                                            </form>
+                                        </div>
+
                                     </dd>
 
                                 </dl>
@@ -183,12 +197,70 @@
 @section Scripts{
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(async function() {
 
-        $(".js-add-participant").on('click')
+        let originalUsers = await $.ajax({
+            url: "/api/appuser/"
+        })
 
+        $(users).each(function() {
+                let option = document.createElement("option");
+                $(option).val(this.userName)
+                $(".add-participants-hints").append(option)
+        })
 
+        $("#add-participant-input").on("keyup", async function (){
+            let input = $(this)
+            let filter = input.val().toLowerCase()
+            users = await $.ajax({
+                url: '/api/appuser/',
+                data: {filter: filter},
+                success: () =>{
+                    $(".add-participants-hints").children().remove()
 
+                    $(users).each(function() {
+                        let option = document.createElement("option");
+                        option.id = this.userName
+                        $(option).val(this.userName)
+                        $(option).text(this.lastName + ", " + this.firstName)
+                        $(".add-participants-hints").append(option)
+                    })
+                }
+            })
+        })
+
+        $(".js-add-participant").on("click", function(){
+            let addParticipants = $(".add-participants")
+            let addParticipantInput = $("#add-participant-input")
+
+            addParticipants.toggleClass("opacity-100");
+            addParticipants.toggleClass("opacity-0");
+            if (addParticipantInput.attr("disabled") == "disabled"){
+                addParticipantInput.removeAttr("disabled")
+            }
+            else{
+                addParticipantInput.val("")
+                addParticipantInput.attr("disabled", "disabled")
+                $(originalUsers).each(function() {
+                        let option = document.createElement("option");
+                        option.id = this.userName
+                        $(option).val(this.userName)
+                        $(option).text(this.lastName + ", " + this.firstName)
+                        $(".add-participants-hints").append(option)
+                    })
+                    }
+            if (addParticipantInput.prop("disabled")){
+                let userName = addParticipantInput.val()
+                let optionsWithUsername = $(".add-participants").find("option[value='" + userName + "']");
+
+                if(optionsWithUsername != null && optionsWithUsername.length > 0)
+                    successToast("User added!");  // allow form submission
+
+                else
+                    errorToast("Invalid Username")
+            }
+
+        })
 
 
 

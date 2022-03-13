@@ -1,9 +1,4 @@
 ﻿
-.buttons-grid {
-    color: red;
-    background-color: red;
-}
-
-h3 {
-    color: white
+.add-participants {
+    transition: all 0.4s ease-out
 }
