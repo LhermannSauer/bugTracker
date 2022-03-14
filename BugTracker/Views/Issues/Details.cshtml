@@ -32,10 +32,10 @@
                                     @{
                                         if (User.IsInRole("IsAdmin"))
                                         {
-                                            <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary btn-sm pull-right">Edit</a>
+                                            <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary btn-sm pull-right js-edit">Edit</a>
                                         }
                                     }
-                                    <h2>Issue BT-@Model.Id</h2>
+                                    <h2 class="issue-title" issueId="@Model.Id">Issue BT-@Model.Id</h2>
                                     <h4>@Model.Title</h4>
                                 </div>
                                 <dl class="dl-horizontal">
@@ -199,8 +199,20 @@
 <script>
     $(document).ready(async function() {
 
+        let issueId = $(".issue-title").attr("issueId")
+        console.log(issueId)
+
         let originalUsers = await $.ajax({
             url: "/api/appuser/"
+        }).done( function(data){
+            $(data).each(function() {
+                    let option = document.createElement("option");
+                    option.id = this.userName
+                    $(option).val(this.userName)
+                    $(option).text(this.lastName + ", " + this.firstName)
+
+                    $(".add-participants-hints").append(option)
+            })
         })
 
         $(users).each(function() {
@@ -212,12 +224,23 @@
         $("#add-participant-input").on("keyup", async function (){
             let input = $(this)
             let filter = input.val().toLowerCase()
+
+            // set the text of the button to add or cancel if the input is empty
+            if (input.val() != "")
+                $(".js-add-participant").text("Add")
+            else
+                $(".js-add-participant").text("Cancel")
+
+
+            // Get the users using the values as filter
             users = await $.ajax({
                 url: '/api/appuser/',
                 data: {filter: filter},
                 success: () =>{
+                    // remove the previous options
                     $(".add-participants-hints").children().remove()
 
+                    // add options with the new users
                     $(users).each(function() {
                         let option = document.createElement("option");
                         option.id = this.userName
@@ -230,35 +253,49 @@
         })
 
         $(".js-add-participant").on("click", function(){
-            let addParticipants = $(".add-participants")
+            let addParticipants = $(".add-participants") // DIV
             let addParticipantInput = $("#add-participant-input")
 
-            addParticipants.toggleClass("opacity-100");
-            addParticipants.toggleClass("opacity-0");
-            if (addParticipantInput.attr("disabled") == "disabled"){
-                addParticipantInput.removeAttr("disabled")
-            }
-            else{
-                addParticipantInput.val("")
-                addParticipantInput.attr("disabled", "disabled")
-                $(originalUsers).each(function() {
-                        let option = document.createElement("option");
-                        option.id = this.userName
-                        $(option).val(this.userName)
-                        $(option).text(this.lastName + ", " + this.firstName)
-                        $(".add-participants-hints").append(option)
-                    })
-                    }
+            // If the input is not enabled, enable it
             if (addParticipantInput.prop("disabled")){
+                addParticipants.toggleClass("opacity-0");
+                addParticipantInput.removeAttr("disabled")
+                this.innerText = "Cancel"
+            }
+
+            // if enabled but no there is no input, hide it
+            else if (addParticipantInput.val() == ""){
+                addParticipants.toggleClass("opacity-0");
+                addParticipantInput.attr("disabled", "disabled")
+            }
+
+            // if enabled and with input,
+            else{
+                console.log("HERE")
                 let userName = addParticipantInput.val()
                 let optionsWithUsername = $(".add-participants").find("option[value='" + userName + "']");
 
                 if(optionsWithUsername != null && optionsWithUsername.length > 0)
-                    successToast("User added!");  // allow form submission
+                {
+                    $.ajax({
+                        url: '/api/issues/addParticipant',
+                        method:"POST",
+                        contentType: "application/json",
+                        data: JSON.stringify({userName: userName, issueId: issueId}),
+                        success: () =>{
+                            successToast("User added!");
+                            addParticipantInput.val("")
 
+                        },
+                        error: (xhr, ajaxopt, error) =>{
+                            errorToast("Something Bad")
+                        }
+                    })
+                }
                 else
                     errorToast("Invalid Username")
             }
+
 
         })
 

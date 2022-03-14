@@ -107,6 +107,34 @@
 
             activitiesController.AddActivityAsync(issue, userId, message, statusId, updatedStatus);
         }
+
+        [HttpPost("addParticipant")]
+        [AllowAnonymous]
+        public async Task<IActionResult> AddParticipant([FromBody] AddParticipantModel participant)
+        {
+            if (participant == null)
+                return BadRequest();
+
+            var user = await _context.Users.SingleAsync(u => u.UserName.Equals(participant.UserName));
+            var userIsParticipant = await _context.IssueParticipants.AnyAsync(p => p.ParticipantsId == user.Id &&
+                                                                                p.IssueId == participant.IssueId);
+
+            if (userIsParticipant)
+            {
+                return BadRequest("The user is already a participant");
+            }
+
+            var newParticipant = new IssueParticipant
+            {
+                IssueId = participant.IssueId,
+                ParticipantsId = user.Id
+            };
+
+            await _context.IssueParticipants.AddAsync(newParticipant);
+            _context.SaveChanges();
+
+            return Ok(newParticipant);
+        }
     }
 }
 

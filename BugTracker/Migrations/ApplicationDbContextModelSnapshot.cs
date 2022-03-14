@@ -441,7 +441,7 @@ namespace BugTracker.Migrations
 
             modelBuilder.Entity("BugTracker.Models.Activity", b =>
                 {
-                    b.HasOne("BugTracker.Models.Issue", null)
+                    b.HasOne("BugTracker.Models.Issue", "Issue")
                         .WithMany("Activities")
                         .HasForeignKey("IssueId");
 
@@ -456,6 +456,8 @@ namespace BugTracker.Migrations
                     b.HasOne("BugTracker.Models.AppUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Issue");
 
                     b.Navigation("ReassignedTo");
 
