@@ -1,9 +1,6 @@
-﻿using BugTracker.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-
-namespace BugTracker.Controllers
+﻿namespace BugTracker.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
